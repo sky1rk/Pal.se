@@ -1,0 +1,381 @@
+.dashboard .monitor-main {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  background-color: #f7f4f1;
+}
+
+.dashboard .monitor-main::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dashboard .monitor-main::-webkit-scrollbar-thumb {
+  background: #d8d1ca;
+  border-radius: 999px;
+}
+
+.dashboard .edit-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dashboard .crumb-link,
+.dashboard .crumb-current {
+  font-family: "Inter-Medium", Helvetica;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: normal;
+  letter-spacing: 0;
+}
+
+.dashboard .crumb-link {
+  color: #8c847f;
+}
+
+.dashboard .crumb-link:hover,
+.dashboard .crumb-current:hover {
+  color: #631820;
+}
+
+.dashboard .crumb-current {
+  color: #2b2b2b;
+}
+
+.dashboard .crumb-chevron {
+  width: 14px;
+  height: 14px;
+  color: #8c847f;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .monitor-view {
+  min-width: 1040px;
+  padding: 20px 24px 32px;
+}
+
+.dashboard .monitor-heading h1 {
+  margin: 0;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #2b2b2b;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.dashboard .monitor-patient-row {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard .monitor-patient-row p {
+  margin: 0;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #8d8882;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.dashboard .risk-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 22px;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.dashboard .risk-pill.high {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.dashboard .metric-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dashboard .metric-card {
+  border: 1px solid #00000014;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 12px 14px 10px;
+}
+
+.dashboard .metric-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard .metric-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard .metric-icon {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .metric-label {
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #9a8f8a;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.dashboard .metric-alert {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #f97316;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .metric-value-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.dashboard .metric-value {
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #2b2b2b;
+  font-size: 32px;
+  line-height: 0.95;
+}
+
+.dashboard .metric-unit {
+  margin-left: 8px;
+  margin-bottom: 4px;
+  font-family: "Inter-Medium", Helvetica;
+  font-weight: 500;
+  color: #9a8f8a;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.dashboard .metric-spark {
+  margin-left: auto;
+  width: 28px;
+  height: 14px;
+  color: #ef4444;
+}
+
+.dashboard .metric-spark polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .metric-heart .metric-icon,
+.dashboard .metric-heart .metric-spark {
+  color: #ef4444;
+}
+
+.dashboard .metric-temp .metric-icon,
+.dashboard .metric-temp .metric-spark {
+  color: #f97316;
+}
+
+.dashboard .metric-oxygen .metric-icon,
+.dashboard .metric-oxygen .metric-spark {
+  color: #10b981;
+}
+
+.dashboard .metric-resp .metric-icon,
+.dashboard .metric-resp .metric-spark {
+  color: #ef4444;
+}
+
+.dashboard .chart-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dashboard .chart-card {
+  border: 1px solid #00000014;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 12px 12px 10px;
+  color: #ef4444;
+}
+
+.dashboard .chart-card h2 {
+  margin: 0;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #2b2b2b;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.dashboard .chart-svg {
+  margin-top: 6px;
+  width: 92%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard .chart-gridline {
+  stroke: #e8e4df;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.dashboard .chart-y-label {
+  fill: #a29a95;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 9px;
+}
+
+.dashboard .chart-area {
+  fill: currentColor;
+  opacity: 0.2;
+}
+
+.dashboard .chart-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .heart-chart {
+  color: #ef4444;
+}
+
+.dashboard .temp-chart {
+  color: #f97316;
+}
+
+.dashboard .oxygen-chart {
+  color: #10b981;
+}
+
+.dashboard .resp-chart {
+  color: #f97316;
+}
+
+.dashboard .chart-x-axis {
+  margin-top: 1px;
+  width: 92%;
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 3px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard .chart-x-axis span {
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #a29a95;
+  font-size: 7px;
+  line-height: 1;
+  text-align: center;
+}
+
+.dashboard .topbar-chevron {
+  width: 16px;
+  height: 16px;
+  color: #84807a;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .button-margin {
+  left: 24px;
+  right: auto;
+}
+
+.dashboard .group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dashboard .logout-icon {
+  width: 16px;
+  height: 16px;
+  color: #e6d5d6;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 1650px) {
+  .dashboard .monitor-heading h1 {
+    font-size: 22px;
+  }
+
+  .dashboard .monitor-patient-row p {
+    font-size: 13px;
+  }
+
+  .dashboard .metric-value {
+    font-size: 30px;
+  }
+
+  .dashboard .metric-unit {
+    font-size: 12px;
+  }
+
+  .dashboard .chart-card h2 {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1320px) {
+  .dashboard .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
