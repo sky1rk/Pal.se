@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="container">
+        <div class="aside-sidebar">
+          <div class="nav">
+            <div class="link-margin">
+              <a class="link sidebar-link" href="{{ page_url('dashboard') }}" aria-label="Open dashboard">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="8" height="8" rx="1.5"></rect>
+                  <rect x="13" y="3" width="8" height="5" rx="1.5"></rect>
+                  <rect x="13" y="10" width="8" height="11" rx="1.5"></rect>
+                  <rect x="3" y="13" width="8" height="8" rx="1.5"></rect>
+                </svg>
+                <div class="text">Dashboard</div>
+              </a>
+            </div>
+            <div class="link-wrapper">
+              <a class="div sidebar-link" href="{{ page_url('patients') }}" aria-label="Open patients">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="9" cy="8" r="3"></circle>
+                  <path d="M3.5 18.5c0-3 2.7-5.5 6-5.5s6 2.5 6 5.5"></path>
+                </svg>
+                <div class="text-wrapper">Patients</div>
+              </a>
+            </div>
+            <div class="link-wrapper">
+              <a class="div sidebar-link is-active" href="{{ page_url('reports') }}" aria-label="Open reports">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 3.5h9l4 4V20a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 20z"></path>
+                  <path d="M15 3.5V8h4"></path>
+                  <path d="M8.5 12h7M8.5 15h7"></path>
+                </svg>
+                <div class="text-2">Reports</div>
+              </a>
+            </div>
+            <div class="link-margin-2"></div>
+          </div>
+          <div class="button-margin">
+            <a class="group" href="{{ page_url('login') }}">
+              <div class="div-wrapper"><div class="SVG"></div></div>
+              <div class="text-3">Logout</div>
+            </a>
+          </div>
+          <div class="group-2">
+            <img class="image" src="{{ url_for('static', filename='images/logo.png') }}" />
+            <img class="image-2" src="{{ url_for('static', filename='images/name.png') }}" />
+          </div>
+        </div>
+
+        <div class="main-area">
+          <div class="header-topbar">
+            <div class="container-2">
+              <div class="container-3"><a class="text-4" href="{{ page_url('reports') }}">Reports</a></div>
+              <div class="margin"></div>
+              <div class="container-4"><div class="text-5">Generated EOS Reports</div></div>
+            </div>
+            <div class="container-wrapper">
+              <div class="container-5">
+                <div class="container-6">
+                  <div class="container-7"><div class="text-wrapper-2">Dr. Sarah Jenkins</div></div>
+                  <div class="container-7"><div class="text-wrapper-3">Pediatrician</div></div>
+                </div>
+                <a class="profile-avatar-link" href="{{ page_url('profile') }}" aria-label="Open profile page">
+                  <div class="background"><div class="text-wrapper-4">SJ</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <main class="reports-main">
+            <section class="reports-heading">
+              <h1>Generated Reports</h1>
+              <p>Residual ensemble reports created from dashboard predictions.</p>
+            </section>
+            <section class="reports-list" id="reports-list" aria-live="polite">
+              <div class="empty-state">No reports generated yet.</div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/system-state.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+  </body>
+</html>

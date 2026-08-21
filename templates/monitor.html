@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="static/css/global.css" />
+    <link rel="stylesheet" href="static/css/dashboard.css" />
+    <link rel="stylesheet" href="static/css/monitor.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="container">
+        <div class="aside-sidebar">
+          <div class="nav">
+            <div class="link-margin">
+              <a class="link sidebar-link" href="dashboard.html" aria-label="Open dashboard">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="8" height="8" rx="1"></rect>
+                  <rect x="13" y="3" width="8" height="5" rx="1"></rect>
+                  <rect x="13" y="10" width="8" height="11" rx="1"></rect>
+                  <rect x="3" y="13" width="8" height="8" rx="1"></rect>
+                </svg>
+                <div class="text">Dashboard</div>
+              </a>
+            </div>
+            <div class="link-wrapper">
+              <a class="div sidebar-link is-active" href="patients.html" aria-label="Open patients">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8" cy="7" r="3"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a3 3 0 0 1 0 5.74"></path>
+                </svg>
+                <div class="text-wrapper">Patients</div>
+              </a>
+            </div>
+            <div class="link-wrapper">
+              <div class="div sidebar-link" role="button" tabindex="0" aria-label="Reports">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19h16"></path>
+                  <path d="M7 16V8"></path>
+                  <path d="M12 16V5"></path>
+                  <path d="M17 16v-3"></path>
+                </svg>
+                <div class="text-2">Reports</div>
+              </div>
+            </div>
+            <div class="link-margin-2"></div>
+          </div>
+          <div class="button-margin">
+            <a class="group" href="login.html" aria-label="Logout">
+              <div class="div-wrapper">
+                <div class="div-wrapper">
+                  <div class="SVG">
+                    <svg class="vector logout-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                      <path d="M10 17l-5-5 5-5"></path>
+                      <path d="M5 12h13"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="text-3">Logout</div>
+            </a>
+          </div>
+          <div class="group-2">
+            <img class="image" src="images/logo.png" alt="PAL.SE logo" />
+            <img class="image-2" src="images/name.png" alt="PAL.SE" />
+          </div>
+        </div>
+
+        <div class="main-area">
+          <div class="header-topbar">
+            <div class="edit-breadcrumb" aria-label="Breadcrumb">
+              <a class="crumb-link" href="patients.html">Patients</a>
+              <svg class="crumb-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+              <a class="crumb-link" href="monitor.html" aria-current="page">Monitor</a>
+              <svg class="crumb-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+              <a class="crumb-current" href="dashboard.html">Neonatal Sepsis Prediction</a>
+            </div>
+            <div class="container-wrapper">
+              <div class="container-5">
+                <div class="container-6">
+                  <div class="container-7"><div class="text-wrapper-2">Dr. Sarah Jenkins</div></div>
+                  <div class="container-7"><div class="text-wrapper-3">Neonatologist</div></div>
+                </div>
+                <a class="profile-avatar-link" href="profile.html" aria-label="Open profile page">
+                  <div class="background"><div class="text-wrapper-4">SJ</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <main class="monitor-main">
+            <section class="monitor-view">
+              <header class="monitor-heading">
+                <h1>Vital Signs Monitor</h1>
+                <div class="monitor-patient-row">
+                  <p>Baby Amare (NEO-2024-001)</p>
+                  <span class="risk-pill high">HIGH</span>
+                </div>
+              </header>
+
+              <section class="metric-grid" aria-label="Current vital signs">
+                <article class="metric-card metric-heart">
+                  <div class="metric-head">
+                    <div class="metric-label-wrap">
+                      <svg class="metric-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                      <span class="metric-label">HEART RATE</span>
+                    </div>
+                    <svg class="metric-alert" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3l-8.47-14.14a2 2 0 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </div>
+                  <div class="metric-value-row">
+                    <span class="metric-value">148</span>
+                    <span class="metric-unit">bpm</span>
+                    <svg class="metric-spark" viewBox="0 0 32 16" aria-hidden="true">
+                      <polyline points="1,11 7,11 12,6 18,12 24,4 31,7"></polyline>
+                    </svg>
+                  </div>
+                </article>
+
+                <article class="metric-card metric-temp">
+                  <div class="metric-head">
+                    <div class="metric-label-wrap">
+                      <svg class="metric-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M14 14.76V3a2 2 0 1 0-4 0v11.76a4 4 0 1 0 4 0z"></path>
+                      </svg>
+                      <span class="metric-label">TEMPERATURE</span>
+                    </div>
+                    <svg class="metric-alert" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3l-8.47-14.14a2 2 0 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </div>
+                  <div class="metric-value-row">
+                    <span class="metric-value">38.2</span>
+                    <span class="metric-unit">&deg;C</span>
+                    <svg class="metric-spark" viewBox="0 0 32 16" aria-hidden="true">
+                      <polyline points="1,12 8,10 14,10 20,7 26,6 31,5"></polyline>
+                    </svg>
+                  </div>
+                </article>
+
+                <article class="metric-card metric-oxygen">
+                  <div class="metric-head">
+                    <div class="metric-label-wrap">
+                      <svg class="metric-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C8 7 6 10 6 13a6 6 0 0 0 12 0c0-3-2-6-6-11z"></path>
+                      </svg>
+                      <span class="metric-label">O2 SATURATION</span>
+                    </div>
+                  </div>
+                  <div class="metric-value-row">
+                    <span class="metric-value">94</span>
+                    <span class="metric-unit">%</span>
+                    <svg class="metric-spark" viewBox="0 0 32 16" aria-hidden="true">
+                      <polyline points="1,5 7,5 12,6 18,8 24,10 31,11"></polyline>
+                    </svg>
+                  </div>
+                </article>
+
+                <article class="metric-card metric-resp">
+                  <div class="metric-head">
+                    <div class="metric-label-wrap">
+                      <svg class="metric-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 10h7a3 3 0 1 0 0-6"></path>
+                        <path d="M3 14h11a3 3 0 1 1 0 6"></path>
+                      </svg>
+                      <span class="metric-label">RESP RATE</span>
+                    </div>
+                    <svg class="metric-alert" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3l-8.47-14.14a2 2 0 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </div>
+                  <div class="metric-value-row">
+                    <span class="metric-value">52</span>
+                    <span class="metric-unit">/min</span>
+                    <svg class="metric-spark" viewBox="0 0 32 16" aria-hidden="true">
+                      <polyline points="1,10 7,8 12,9 18,5 24,6 31,4"></polyline>
+                    </svg>
+                  </div>
+                </article>
+              </section>
+
+              <section class="chart-grid" aria-label="Vital signs trend charts">
+                <article class="chart-card heart-chart">
+                  <h2>Heart Rate (bpm)</h2>
+                  <svg class="chart-svg" viewBox="0 0 560 220" role="img" aria-label="Heart rate graph from 0:00 to 23:00">
+                    <line class="chart-gridline" x1="56" y1="30" x2="540" y2="30"></line>
+                    <line class="chart-gridline" x1="56" y1="70" x2="540" y2="70"></line>
+                    <line class="chart-gridline" x1="56" y1="110" x2="540" y2="110"></line>
+                    <line class="chart-gridline" x1="56" y1="150" x2="540" y2="150"></line>
+                    <line class="chart-gridline" x1="56" y1="190" x2="540" y2="190"></line>
+                    <text class="chart-y-label" x="28" y="34">160</text>
+                    <text class="chart-y-label" x="28" y="74">120</text>
+                    <text class="chart-y-label" x="32" y="114">80</text>
+                    <text class="chart-y-label" x="32" y="154">40</text>
+                    <text class="chart-y-label" x="40" y="194">0</text>
+                    <polygon
+                      class="chart-area"
+                      points="56,55 96,52 136,60 176,55 216,78 256,82 296,68 336,60 376,52 416,66 456,78 496,68 540,64 540,190 56,190"
+                    ></polygon>
+                    <polyline
+                      class="chart-line"
+                      points="56,55 96,52 136,60 176,55 216,78 256,82 296,68 336,60 376,52 416,66 456,78 496,68 540,64"
+                    ></polyline>
+                  </svg>
+                  <div class="chart-x-axis">
+                    <span>0:00</span><span>2:00</span><span>4:00</span><span>6:00</span><span>8:00</span><span>10:00</span><span>12:00</span>
+                    <span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span><span>23:00</span>
+                  </div>
+                </article>
+
+                <article class="chart-card temp-chart">
+                  <h2>Temperature (&deg;C)</h2>
+                  <svg class="chart-svg" viewBox="0 0 560 220" role="img" aria-label="Temperature graph from 0:00 to 23:00">
+                    <line class="chart-gridline" x1="56" y1="30" x2="540" y2="30"></line>
+                    <line class="chart-gridline" x1="56" y1="70" x2="540" y2="70"></line>
+                    <line class="chart-gridline" x1="56" y1="110" x2="540" y2="110"></line>
+                    <line class="chart-gridline" x1="56" y1="150" x2="540" y2="150"></line>
+                    <line class="chart-gridline" x1="56" y1="190" x2="540" y2="190"></line>
+                    <text class="chart-y-label" x="36" y="34">40</text>
+                    <text class="chart-y-label" x="36" y="74">30</text>
+                    <text class="chart-y-label" x="36" y="114">20</text>
+                    <text class="chart-y-label" x="36" y="154">10</text>
+                    <text class="chart-y-label" x="40" y="194">0</text>
+                    <polygon
+                      class="chart-area"
+                      points="56,76 96,75 136,74 176,75 216,75 256,74 296,73 336,73 376,73 416,74 456,75 496,74 540,73 540,190 56,190"
+                    ></polygon>
+                    <polyline
+                      class="chart-line"
+                      points="56,76 96,75 136,74 176,75 216,75 256,74 296,73 336,73 376,73 416,74 456,75 496,74 540,73"
+                    ></polyline>
+                  </svg>
+                  <div class="chart-x-axis">
+                    <span>0:00</span><span>2:00</span><span>4:00</span><span>6:00</span><span>8:00</span><span>10:00</span><span>12:00</span>
+                    <span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span><span>23:00</span>
+                  </div>
+                </article>
+
+                <article class="chart-card oxygen-chart">
+                  <h2>O2 Saturation (%)</h2>
+                  <svg class="chart-svg" viewBox="0 0 560 220" role="img" aria-label="Oxygen saturation graph from 0:00 to 23:00">
+                    <line class="chart-gridline" x1="56" y1="30" x2="540" y2="30"></line>
+                    <line class="chart-gridline" x1="56" y1="70" x2="540" y2="70"></line>
+                    <line class="chart-gridline" x1="56" y1="110" x2="540" y2="110"></line>
+                    <line class="chart-gridline" x1="56" y1="150" x2="540" y2="150"></line>
+                    <line class="chart-gridline" x1="56" y1="190" x2="540" y2="190"></line>
+                    <text class="chart-y-label" x="32" y="34">100</text>
+                    <text class="chart-y-label" x="40" y="74">75</text>
+                    <text class="chart-y-label" x="40" y="114">50</text>
+                    <text class="chart-y-label" x="40" y="154">25</text>
+                    <text class="chart-y-label" x="40" y="194">0</text>
+                    <polygon
+                      class="chart-area"
+                      points="56,42 96,43 136,44 176,42 216,43 256,44 296,45 336,44 376,43 416,42 456,43 496,44 540,45 540,190 56,190"
+                    ></polygon>
+                    <polyline
+                      class="chart-line"
+                      points="56,42 96,43 136,44 176,42 216,43 256,44 296,45 336,44 376,43 416,42 456,43 496,44 540,45"
+                    ></polyline>
+                  </svg>
+                  <div class="chart-x-axis">
+                    <span>0:00</span><span>2:00</span><span>4:00</span><span>6:00</span><span>8:00</span><span>10:00</span><span>12:00</span>
+                    <span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span><span>23:00</span>
+                  </div>
+                </article>
+
+                <article class="chart-card resp-chart">
+                  <h2>Respiratory Rate (/min)</h2>
+                  <svg class="chart-svg" viewBox="0 0 560 220" role="img" aria-label="Respiratory rate graph from 0:00 to 23:00">
+                    <line class="chart-gridline" x1="56" y1="30" x2="540" y2="30"></line>
+                    <line class="chart-gridline" x1="56" y1="70" x2="540" y2="70"></line>
+                    <line class="chart-gridline" x1="56" y1="110" x2="540" y2="110"></line>
+                    <line class="chart-gridline" x1="56" y1="150" x2="540" y2="150"></line>
+                    <line class="chart-gridline" x1="56" y1="190" x2="540" y2="190"></line>
+                    <text class="chart-y-label" x="36" y="34">60</text>
+                    <text class="chart-y-label" x="36" y="74">45</text>
+                    <text class="chart-y-label" x="36" y="114">30</text>
+                    <text class="chart-y-label" x="36" y="154">15</text>
+                    <text class="chart-y-label" x="40" y="194">0</text>
+                    <polygon
+                      class="chart-area"
+                      points="56,102 96,86 136,94 176,110 216,126 256,132 296,116 336,108 376,94 416,102 456,126 496,132 540,102 540,190 56,190"
+                    ></polygon>
+                    <polyline
+                      class="chart-line"
+                      points="56,102 96,86 136,94 176,110 216,126 256,132 296,116 336,108 376,94 416,102 456,126 496,132 540,102"
+                    ></polyline>
+                  </svg>
+                  <div class="chart-x-axis">
+                    <span>0:00</span><span>2:00</span><span>4:00</span><span>6:00</span><span>8:00</span><span>10:00</span><span>12:00</span>
+                    <span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span><span>23:00</span>
+                  </div>
+                </article>
+              </section>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

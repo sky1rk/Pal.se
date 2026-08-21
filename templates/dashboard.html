@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="container">
+        <div class="aside-sidebar">
+          <div class="nav">
+            <div class="link-margin">
+              <div class="link sidebar-link is-active" role="button" tabindex="0" aria-label="Open dashboard">
+                <img class="img" src="img/container-3.svg" />
+                <div class="text">Dashboard</div>
+              </div>
+            </div>
+            <div class="link-wrapper">
+              <div class="div sidebar-link" role="button" tabindex="0" aria-label="Open patients">
+                <img class="img" src="img/container-2.svg" />
+                <div class="text-wrapper">Patients</div>
+              </div>
+            </div>
+            <div class="link-wrapper">
+              <div class="div">
+                <img class="img" src="img/container.svg" />
+                <div class="text-2">Reports</div>
+              </div>
+            </div>
+            <div class="link-margin-2"></div>
+          </div>
+          <div class="button-margin">
+            <a class="group" href="login.html">
+              <div class="div-wrapper">
+                <div class="div-wrapper">
+                  <div class="SVG"><img class="vector" src="img/vector.svg" /></div>
+                </div>
+              </div>
+              <div class="text-3">Logout</div>
+            </a>
+          </div>
+          <div class="group-2">
+            <img class="image" src="images/logo.png" /> <img class="image-2" src="images/name.png" />
+          </div>
+        </div>
+        <div class="main-area">
+          <div class="header-topbar">
+            <div class="container-2">
+              <div class="container-3"><a class="text-4" href="dashboard.html">Dashboard</a></div>
+              <div class="margin">
+                <div class="iconify-icon-wrapper">
+                  <div class="div-wrapper-2">
+                    <div class="vector-wrapper"><img class="vector-2" src="img/vector-2.svg" /></div>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4"><div class="text-5">Neonatal Sepsis Prediction</div></div>
+            </div>
+            <div class="container-wrapper">
+              <div class="container-5">
+                <div class="container-6">
+                  <div class="container-7"><div class="text-wrapper-2">Dr. Sarah Jenkins</div></div>
+                  <div class="container-7"><div class="text-wrapper-3">Pediatrician</div></div>
+                </div>
+                <a class="profile-avatar-link" href="profile.html" aria-label="Open profile page">
+                  <div class="background"><div class="text-wrapper-4">SJ</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="content-area-wrapper">
+              <div class="content-area">
+                <div class="container-8">
+                  <div class="div-wrapper-3"><p class="p">PAL.SE: Early-Onset Neonatal Sepsis Risk Prediction</p></div>
+                  <div class="div-wrapper-3"><div class="text-wrapper-5">Clinical Decision Support System</div></div>
+                </div>
+                <div class="container-9">
+                  <div class="left-column-forms">
+                    <div class="section">
+                      <div class="container-10">
+                        <div class="background-2"><div class="text-6">1</div></div>
+                        <div class="heading"><div class="text-7">Demographic &amp; Perinatal</div></div>
+                      </div>
+                      <div class="container-11">
+                        <div class="container-12 patient-id-field">
+                          <div class="label"><div class="text-wrapper-11">PATIENT ID</div></div>
+                          <div class="input">
+                            <div class="container-13"><div class="text-wrapper-9">NEO-2024-001</div></div>
+                          </div>
+                        </div>
+                        <div class="container-12 sex-field">
+                          <div class="label"><div class="text-wrapper-6">SEX</div></div>
+                          <div class="input">
+                            <div class="container-13"><div class="text-wrapper-7">Select Sex</div></div>
+                          </div>
+                        </div>
+                        <div class="container-12 gestational-age-field">
+                          <div class="label"><div class="text-wrapper-8">GESTATIONAL AGE (WEEKS)</div></div>
+                          <div class="input">
+                            <div class="container-13"><div class="text-wrapper-9">e.g. 38</div></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="container-14">
+                        <div class="container-12 birth-weight-field">
+                          <div class="label"><div class="text-wrapper-10">BIRTH WEIGHT (GRAMS)</div></div>
+                          <div class="input">
+                            <div class="container-13"><div class="text-wrapper-9">e.g. 3200</div></div>
+                          </div>
+                        </div>
+                        <div class="container-12 delivery-mode-field">
+                          <div class="label"><div class="text-wrapper-11">DELIVERY MODE</div></div>
+                          <div class="input">
+                            <div class="container-13"><div class="text-wrapper-7">Vaginal</div></div>
+                          </div>
+                        </div>
+                        <div class="margin-2">
+                          <div class="label-wrapper">
+                            <div class="label-3">
+                              <div class="background-shadow-wrapper"><div class="background-shadow"></div></div>
+                              <div class="base-switch-icon-wrapper">
+                                <div class="base-switch-icon"><img class="check" src="img/image.png" /></div>
+                              </div>
+                              <div class="text-8">Multiple Birth</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section-2">
+                      <div class="container-10">
+                        <div class="background-2"><div class="text-9">2</div></div>
+                        <div class="heading-2"><div class="text-10">Maternal Factors</div></div>
+                      </div>
+                      <div class="container-15">
+                        <div class="container-16">
+                          <div class="label-4"><div class="text-wrapper-13">MATERNAL AGE</div></div>
+                          <div class="input-2"></div>
+                        </div>
+                        <div class="container-16">
+                          <div class="label-4"><div class="ANC-VISITS">ANC VISITS (&gt;= 4)</div></div>
+                          <div class="input-3">
+                            <div class="container-17"><div class="text-wrapper-14">Yes</div></div>
+                          </div>
+                        </div>
+                        <div class="container-16">
+                          <div class="label-4"><div class="PROM">PROM &gt; 18H</div></div>
+                          <div class="background-3">
+                            <div class="background-4"><div class="text-wrapper-15">YES</div></div>
+                            <div class="container-18"><div class="text-wrapper-16">NO</div></div>
+                          </div>
+                        </div>
+                        <div class="container-16">
+                          <div class="label-4"><div class="FEVER-c">FEVER (&gt;= 38°C)</div></div>
+                          <div class="background-3">
+                            <div class="container-18"><div class="text-11">YES</div></div>
+                            <div class="background-4"><div class="text-wrapper-17">NO</div></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="container-15">
+                        <div class="label-5">
+                          <div class="input-4"></div>
+                          <div class="text-12">UTI during pregnancy</div>
+                        </div>
+                        <div class="label-5">
+                          <div class="input-4"></div>
+                          <div class="text-wrapper-18">Chorioamnionitis</div>
+                        </div>
+                        <div class="label-5">
+                          <div class="input-4"></div>
+                          <div class="text-13">HIV Positive</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section-3">
+                      <div class="container-10">
+                        <div class="background-2"><div class="text-14">3</div></div>
+                        <div class="heading-3"><div class="text-15">Neonatal Clinical Signs</div></div>
+                      </div>
+                      <div class="container-15">
+                        <div class="container-19">
+                          <div class="label-6"><div class="text-wrapper-19">AGE (H)</div></div>
+                          <div class="input-2"></div>
+                        </div>
+                        <div class="container-19">
+                          <div class="label-6"><div class="text-wrapper-20">APGAR (5 MIN)</div></div>
+                          <div class="input-2"></div>
+                        </div>
+                      </div>
+                      <div class="container-15">
+                        <div class="container-16 clinical-comorbidity-field">
+                          <div class="label-4"><div class="text-wrapper-13 wide-input-label">COMORBIDITY</div></div>
+                          <div class="input-3">
+                            <div class="container-17"><div class="text-wrapper-14">0 = No, 1 = Yes</div></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="container-20">
+                        <div class="label-7">
+                          <div class="input-4"></div>
+                          <div class="text-16">Poor Feeding</div>
+                        </div>
+                        <div class="label-8">
+                          <div class="input-4"></div>
+                          <div class="text-17">Lethargy</div>
+                        </div>
+                        <div class="label-9">
+                          <div class="input-4"></div>
+                          <div class="text-wrapper-21">Convulsions</div>
+                        </div>
+                        <div class="label-margin">
+                          <div class="label-10">
+                            <div class="input-4"></div>
+                            <div class="text-wrapper-22">Respiratory Distress</div>
+                          </div>
+                        </div>
+                        <div class="label-margin-2">
+                          <div class="label-10">
+                            <div class="input-4"></div>
+                            <div class="text-wrapper-23">Jaundice</div>
+                          </div>
+                        </div>
+                        <div class="label-margin-3">
+                          <div class="label-10">
+                            <div class="input-4"></div>
+                            <div class="text-wrapper-24">Bulging Font</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="sections-side-by">
+                      <div class="section-4">
+                        <div class="container-21">
+                          <div class="background-2"><div class="text-18">4</div></div>
+                          <div class="heading-4"><div class="text-19">Laboratory</div></div>
+                        </div>
+                        <div class="container-22">
+                          <div class="container-23">
+                            <div class="label-11"><div class="text-wrapper-25">CRP (MG/L)</div></div>
+                            <div class="input-5">
+                              <div class="container-24"><div class="text-wrapper-26">CRP (mg/L)</div></div>
+                            </div>
+                          </div>
+                          <div class="container-23">
+                            <div class="label-11"><div class="text-wrapper-27">WBC COUNT</div></div>
+                            <div class="input-5">
+                              <div class="container-24"><div class="text-wrapper-26">WBC Count</div></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="container-25">
+                          <div class="label-11"><div class="text-wrapper-28">PLATELET COUNT</div></div>
+                          <div class="input-5">
+                            <div class="container-24"><div class="text-wrapper-26">Platelet Count</div></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="section-4">
+                        <div class="container-21">
+                          <div class="background-2"><div class="text-21">5</div></div>
+                          <div class="heading-5"><div class="text-wrapper-31">Physiological (Hourly)</div></div>
+                        </div>
+                        <div class="container-22">
+                          <div class="container-23">
+                            <div class="label-11"><div class="text-wrapper-32">HR (BPM)</div></div>
+                            <div class="input-5">
+                              <div class="container-24"><div class="text-wrapper-26">HR (bpm)</div></div>
+                            </div>
+                          </div>
+                          <div class="container-23">
+                            <div class="label-11"><div class="text-wrapper-33">TEMP (°C)</div></div>
+                            <div class="input-5">
+                              <div class="container-24"><div class="text-wrapper-26">Temp (°C)</div></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="container-28">
+                          <div class="container-23">
+                            <div class="label-11"><div class="text-wrapper-34">SBP / DBP</div></div>
+                            <div class="input-5">
+                              <div class="container-24"><div class="text-wrapper-26">SBP / DBP</div></div>
+                            </div>
+                          </div>
+                          <div class="container-23">
+                            <div class="label-11"><div class="text-wrapper-35">O2 SAT (%)</div></div>
+                            <div class="input-5">
+                              <div class="container-24"><div class="text-wrapper-26">O2 Sat (%)</div></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="container-25">
+                          <div class="label-11"><div class="text-wrapper-36">RESPIRATORY RATE</div></div>
+                          <div class="input-5">
+                            <div class="container-29"><div class="text-wrapper-37">Resp Rate (/min)</div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section-5">
+                      <div class="container-10">
+                        <div class="background-2"><div class="text-22">6</div></div>
+                        <div class="heading-6"><div class="text-23">Current Treatment</div></div>
+                      </div>
+                      <div class="container-15">
+                        <div class="container-16 treatment-central-line-field">
+                          <div class="label-4"><div class="text-wrapper-13 wide-input-label">CENTRAL VENOUS LINE</div></div>
+                          <div class="input-3">
+                            <div class="container-17"><div class="text-wrapper-14">0 = No, 1 = Yes</div></div>
+                          </div>
+                        </div>
+                        <div class="container-16 treatment-inotrope-field">
+                          <div class="label-4"><div class="text-wrapper-13 wide-input-label">INOTROPE</div></div>
+                          <div class="input-3">
+                            <div class="container-17"><div class="text-wrapper-14">0 = No, 1 = Yes</div></div>
+                          </div>
+                        </div>
+                        <div class="container-16 treatment-intubate-field">
+                          <div class="label-4"><div class="text-wrapper-13 wide-input-label">INTUBATE</div></div>
+                          <div class="input-3">
+                            <div class="container-17"><div class="text-wrapper-14">0 = No, 1 = Yes</div></div>
+                          </div>
+                        </div>
+                        <div class="container-16 treatment-duration-field">
+                          <div class="label-4"><div class="text-wrapper-40">DURATION (DAYS)</div></div>
+                          <div class="input-2"></div>
+                        </div>
+                      </div>
+                      <div class="container-32 treatment-support-options">
+                          <div class="label-13">
+                            <div class="input-7"></div>
+                            <img class="check-2" src="img/check.svg" />
+                            <div class="text-wrapper-41">Oxygen Therapy</div>
+                          </div>
+                          <div class="label-14">
+                            <div class="input-4"></div>
+                            <div class="text-24">Phototherapy</div>
+                          </div>
+                        </div>
+                    </div>
+                    <button class="action-button" type="button" id="calculate-risk">
+                      <img class="iconify-icon" src="img/iconify-icon.svg" />
+                      <div class="text-wrapper-42">CALCULATE RISK SCORE</div>
+                    </button>
+                  </div>
+                  <div class="right-column-results">
+                    <div class="analysis-results">
+                      <div class="heading-7"><div class="text-wrapper-43">Analysis Results</div></div>
+                      <div class="background-border">
+                        <div class="background-wrapper">
+                          <div class="background-7"><div class="text-wrapper-44">HIGH RISK</div></div>
+                        </div>
+                        <div class="heading-margin">
+                          <div class="heading-8"><div class="text-25">Sepsis Risk Detected</div></div>
+                        </div>
+                        <p class="based-on-clinical">Based on Clinical &amp; Lab Biomarkers</p>
+                        <div class="margin-3">
+                          <div class="container-33">
+                            <div class="background-8"></div>
+                            <div class="container-34">
+                              <div class="container-35"><div class="text-wrapper-45">78%</div></div>
+                              <div class="container-35"><div class="text-wrapper-46">PROBABILITY</div></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clinical">
+                      <div class="container-36">
+                        <div class="div-wrapper-2">
+                          <div class="div-wrapper-2">
+                            <div class="vector-wrapper"><img class="vector-3" src="img/vector-3.svg" /></div>
+                          </div>
+                        </div>
+                        <div class="text-wrapper-47">CLINICAL INTERPRETATION</div>
+                      </div>
+                      <div class="strong-alert-wrapper">
+                        <p class="strong-alert">
+                          <span class="span">Alert:</span>
+                          <span class="text-wrapper-48"> Patient shows multiple early-onset</span>
+                          <span class="span"><br /></span>
+                          <span class="text-wrapper-48">indicators including PROM &gt; 18h and CRP</span>
+                          <span class="span"><br /></span>
+                          <span class="text-wrapper-48">elevation. Tachycardia and poor feeding are</span>
+                          <span class="span"><br /></span>
+                          <span class="text-wrapper-48">consistent with systemic inflammatory response.</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="recommended-actions">
+                      <div class="container-36">
+                        <div class="div-wrapper-2">
+                          <div class="div-wrapper-2">
+                            <div class="vector-wrapper"><img class="vector-4" src="img/image.svg" /></div>
+                          </div>
+                        </div>
+                        <div class="text-wrapper-49">RECOMMENDED ACTIONS</div>
+                      </div>
+                      <div class="container-37">
+                        <div class="background-border-2">
+                          <div class="margin-4">
+                            <div class="container-38">
+                              <div class="SVG-wrapper">
+                                <div class="img-wrapper"><img class="vector-5" src="img/vector-4.svg" /></div>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="text-26">Initiate empirical IV antibiotics immediately.</p>
+                        </div>
+                        <div class="background-border-3">
+                          <img class="margin-5" src="img/margin.svg" />
+                          <p class="text-wrapper-50">Repeat CRP and CBC in 12 hours.</p>
+                        </div>
+                        <div class="background-border-4">
+                          <img class="margin-5" src="img/margin-2.svg" />
+                          <div class="text-wrapper-51">Continuous vital sign monitoring.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="prediction-history">
+                      <div class="container-39"><div class="text-wrapper-52">PREDICTION HISTORY</div></div>
+                      <div class="container-40">
+                        <div class="container-41">
+                          <div class="container-42"><div class="text-27">DATE</div></div>
+                          <div class="container-42"><div class="text-28">LEVEL</div></div>
+                          <div class="container-43"><div class="text-29">PROB</div></div>
+                        </div>
+                        <div class="horizontal-border">
+                          <div class="oct-wrapper">
+                            <div class="oct">Oct 24,<br />08:30</div>
+                          </div>
+                          <div class="container-44">
+                            <div class="background-9"><div class="text-wrapper-53">MODERATE</div></div>
+                          </div>
+                          <div class="container-45"><div class="text-wrapper-54">42%</div></div>
+                        </div>
+                        <div class="container-46">
+                          <div class="oct-wrapper">
+                            <div class="oct-2">Oct 23,<br />20:15</div>
+                          </div>
+                          <div class="container-44">
+                            <div class="background-10"><div class="text-wrapper-55">LOW</div></div>
+                          </div>
+                          <div class="container-45"><div class="text-wrapper-56">12%</div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <script src="{{ url_for('static', filename='js/system-state.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+  </body>
+</html>

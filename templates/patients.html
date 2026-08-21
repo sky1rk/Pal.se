@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="static/css/global.css" />
+    <link rel="stylesheet" href="static/css/dashboard.css" />
+    <link rel="stylesheet" href="static/css/patients.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="container">
+        <div class="aside-sidebar">
+          <div class="nav">
+            <div class="link-margin">
+              <div class="link sidebar-link" role="button" tabindex="0" aria-label="Open dashboard">
+                <img class="img" src="img/container-3.svg" />
+                <div class="text">Dashboard</div>
+              </div>
+            </div>
+            <div class="link-wrapper">
+              <div class="div sidebar-link is-active" role="button" tabindex="0" aria-label="Open patients">
+                <img class="img" src="img/container-2.svg" />
+                <div class="text-wrapper">Patients</div>
+              </div>
+            </div>
+            <div class="link-wrapper">
+              <div class="div">
+                <img class="img" src="img/container.svg" />
+                <div class="text-2">Reports</div>
+              </div>
+            </div>
+            <div class="link-margin-2"></div>
+          </div>
+          <div class="button-margin">
+            <a class="group" href="login.html">
+              <div class="div-wrapper">
+                <div class="div-wrapper">
+                  <div class="SVG"><img class="vector" src="img/vector.svg" /></div>
+                </div>
+              </div>
+              <div class="text-3">Logout</div>
+            </a>
+          </div>
+          <div class="group-2">
+            <img class="image" src="images/logo.png" /> <img class="image-2" src="images/name.png" />
+          </div>
+        </div>
+        <div class="main-area">
+          <div class="header-topbar">
+            <div class="container-2">
+              <div class="container-3"><a class="text-4" href="patients.html">Patients</a></div>
+              <div class="margin">
+                <div class="iconify-icon-wrapper">
+                  <div class="div-wrapper-2">
+                    <div class="vector-wrapper"><img class="vector-2" src="img/vector-2.svg" /></div>
+                  </div>
+                </div>
+              </div>
+              <div class="container-4"><div class="text-5">Neonatal Sepsis Prediction</div></div>
+            </div>
+            <div class="container-wrapper">
+              <div class="container-5">
+                <div class="container-6">
+                  <div class="container-7"><div class="text-wrapper-2">Dr. Sarah Jenkins</div></div>
+                  <div class="container-7"><div class="text-wrapper-3">Pediatrician</div></div>
+                </div>
+                <a class="profile-avatar-link" href="profile.html" aria-label="Open profile page">
+                  <div class="background"><div class="text-wrapper-4">SJ</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="content-area-wrapper">
+              <div class="patients-view">
+                <div class="container">
+                  <div class="div">
+                    <div class="text-wrapper"><div class="text">Patient Registry</div></div>
+                    <div class="text-wrapper"><p class="p">Manage and monitor neonatal patients</p></div>
+                  </div>
+                  <a class="div-2 add-patient-link" href="dashboard.html" aria-label="Go to dashboard">
+                    <img class="img" src="img/container-2.svg" />
+                    <div class="text-2">Add Patient</div>
+                  </a>
+                </div>
+                <div class="container-2">
+                  <div class="background-border">
+                    <img class="container-3" src="img/image.svg" />
+                    <div class="input">
+                      <input class="container-4" placeholder="Search patients by name, ID..." type="text" />
+                    </div>
+                  </div>
+                  <div class="filter-control">
+                    <button class="background-border-2" type="button" id="filter-patients-button" aria-expanded="false">
+                      <div class="iconify-icon-wrapper">
+                        <div class="iconify-icon">
+                          <div class="SVG"><img class="vector" src="img/vector-5.svg" /></div>
+                        </div>
+                      </div>
+                      <div class="text-3">Filter</div>
+                    </button>
+                    <div class="filter-menu" id="filter-patients-menu" hidden>
+                      <button class="filter-option" type="button" data-filter="all">All Patients</button>
+                      <button class="filter-option" type="button" data-filter="high">High Risk</button>
+                      <button class="filter-option" type="button" data-filter="moderate">Moderate Risk</button>
+                      <button class="filter-option" type="button" data-filter="low">Low Risk</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="container-2">
+                  <div class="background-border-3">
+                    <div class="div-wrapper"><div class="text-wrapper-2">TOTAL PATIENTS</div></div>
+                    <div class="container-wrapper">
+                      <div class="container-5"><div class="text-4">24</div></div>
+                    </div>
+                    <div class="container-6"><div class="text-5">6 new today</div></div>
+                  </div>
+                  <div class="background-border-3">
+                    <div class="div-wrapper"><div class="text-wrapper-3">HIGH RISK</div></div>
+                    <div class="container-7">
+                      <div class="container-8"><div class="text-6">5</div></div>
+                    </div>
+                    <div class="container-6"><div class="text-7">Requires attention</div></div>
+                  </div>
+                  <div class="background-border-3">
+                    <div class="div-wrapper"><div class="text-wrapper-4">MODERATE RISK</div></div>
+                    <div class="container-wrapper">
+                      <div class="container-10"><div class="text-8">8</div></div>
+                    </div>
+                    <div class="container-6"><div class="text-wrapper-5">Under monitoring</div></div>
+                  </div>
+                  <div class="background-border-3">
+                    <div class="container-11"><div class="text-9">DISCHARGED</div></div>
+                    <div class="container-wrapper">
+                      <div class="container-12"><div class="text-10">11</div></div>
+                    </div>
+                    <div class="container-6"><div class="text-11">This month</div></div>
+                  </div>
+                </div>
+                <div class="table-wrapper">
+                  <div class="table">
+                    <div class="header-row">
+                      <div class="cell"><div class="text-wrapper-6">PATIENT ID</div></div>
+                      <div class="cell-2"><div class="text-wrapper-7">NAME</div></div>
+                      <div class="cell-3"><div class="text-wrapper-8">SEX</div></div>
+                      <div class="cell-4"><div class="text-wrapper-9">GA (WK)</div></div>
+                      <div class="cell-5"><div class="text-12">WEIGHT (G)</div></div>
+                      <div class="cell-6"><div class="text-13">AGE</div></div>
+                      <div class="cell-7"><div class="text-wrapper-10">RISK LEVEL</div></div>
+                      <div class="cell-8"><div class="text-14">STATUS</div></div>
+                      <div class="cell-9"><div class="text-wrapper-11">ADMITTED</div></div>
+                      <div class="cell-10"></div>
+                    </div>
+                    <div class="body">
+                      <div class="row">
+                        <div class="data"><div class="text-15">NEO-2024-001</div></div>
+                        <div class="data-2"><div class="text-16">Baby Liam</div></div>
+                        <div class="data-3"><div class="text-17">M</div></div>
+                        <div class="data-4"><div class="text-18">36</div></div>
+                        <div class="data-5"><div class="text-19">2100</div></div>
+                        <div class="data-6"><div class="text-20">4h</div></div>
+                        <div class="background-wrapper">
+                          <div class="text-wrapper-12"><div class="text-21">HIGH</div></div>
+                        </div>
+                        <div class="data-7">
+                          <div class="container-13">
+                            <img class="container-14" src="img/container-4.svg" />
+                            <div class="text-22">Active</div>
+                          </div>
+                        </div>
+                        <div class="data-8"><div class="text-23">Oct 24, 2024</div></div>
+                        <div class="data-9 table-action-cell">
+                          <button
+                            class="action-menu-trigger"
+                            type="button"
+                            aria-expanded="false"
+                            aria-label="Open row actions"
+                          >
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          </button>
+                          <div class="action-menu" hidden>
+                            <a class="action-menu-item" href="monitor.html">Monitor</a>
+                            <a class="action-menu-item" href="edit-record.html">Edit Record</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="data"><div class="text-wrapper-13">NEO-2024-002</div></div>
+                        <div class="data-2"><div class="text-24">Baby Emma</div></div>
+                        <div class="data-3"><div class="text-25">F</div></div>
+                        <div class="data-4"><div class="text-18">39</div></div>
+                        <div class="data-5"><div class="text-26">3200</div></div>
+                        <div class="data-6"><div class="text-27">12h</div></div>
+                        <div class="background-wrapper">
+                          <div class="div-wrapper-2"><div class="text-wrapper-14">LOW</div></div>
+                        </div>
+                        <div class="data-7">
+                          <div class="container-13">
+                            <img class="container-14" src="img/container-4.svg" />
+                            <div class="text-22">Active</div>
+                          </div>
+                        </div>
+                        <div class="data-8"><div class="text-28">Oct 23, 2024</div></div>
+                        <div class="data-10 table-action-cell">
+                          <button
+                            class="action-menu-trigger"
+                            type="button"
+                            aria-expanded="false"
+                            aria-label="Open row actions"
+                          >
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          </button>
+                          <div class="action-menu" hidden>
+                            <a class="action-menu-item" href="monitor.html">Monitor</a>
+                            <a class="action-menu-item" href="edit-record.html">Edit Record</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="data"><div class="text-wrapper-13">NEO-2024-003</div></div>
+                        <div class="data-2"><div class="text-wrapper-15">Baby Noah</div></div>
+                        <div class="data-3"><div class="text-17">M</div></div>
+                        <div class="data-4"><div class="text-29">34</div></div>
+                        <div class="data-5"><div class="text-30">1850</div></div>
+                        <div class="data-6"><div class="text-31">8h</div></div>
+                        <div class="background-wrapper">
+                          <div class="text-wrapper-16"><div class="text-32">MODERATE</div></div>
+                        </div>
+                        <div class="data-7">
+                          <div class="container-13">
+                            <img class="container-14" src="img/container-4.svg" />
+                            <div class="text-22">Active</div>
+                          </div>
+                        </div>
+                        <div class="data-8"><div class="text-28">Oct 23, 2024</div></div>
+                        <div class="data-10 table-action-cell">
+                          <button
+                            class="action-menu-trigger"
+                            type="button"
+                            aria-expanded="false"
+                            aria-label="Open row actions"
+                          >
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          </button>
+                          <div class="action-menu" hidden>
+                            <a class="action-menu-item" href="monitor.html">Monitor</a>
+                            <a class="action-menu-item" href="edit-record.html">Edit Record</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="data"><div class="text-wrapper-13">NEO-2024-004</div></div>
+                        <div class="data-2"><div class="text-33">Baby Oli</div></div>
+                        <div class="data-3"><div class="text-25">F</div></div>
+                        <div class="data-4"><div class="text-34">40</div></div>
+                        <div class="data-5"><div class="text-35">3400</div></div>
+                        <div class="data-6"><div class="text-36">24h</div></div>
+                        <div class="background-wrapper">
+                          <div class="div-wrapper-2"><div class="text-wrapper-14">LOW</div></div>
+                        </div>
+                        <div class="data-7">
+                          <div class="container-13">
+                            <img class="container-14" src="img/container-6.svg" />
+                            <div class="text-37">Discharged</div>
+                          </div>
+                        </div>
+                        <div class="data-8"><div class="text-38">Oct 20, 2024</div></div>
+                        <div class="data-10 table-action-cell">
+                          <button
+                            class="action-menu-trigger"
+                            type="button"
+                            aria-expanded="false"
+                            aria-label="Open row actions"
+                          >
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          </button>
+                          <div class="action-menu" hidden>
+                            <a class="action-menu-item" href="monitor.html">Monitor</a>
+                            <a class="action-menu-item" href="edit-record.html">Edit Record</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="data"><div class="text-39">NEO-2024-005</div></div>
+                        <div class="data-2"><div class="text-40">Baby Ethan</div></div>
+                        <div class="data-3"><div class="text-17">M</div></div>
+                        <div class="data-4"><div class="text-41">32</div></div>
+                        <div class="data-5"><div class="text-42">1600</div></div>
+                        <div class="data-6"><div class="text-43">2h</div></div>
+                        <div class="background-wrapper">
+                          <div class="text-wrapper-12"><div class="text-21">HIGH</div></div>
+                        </div>
+                        <div class="data-7">
+                          <div class="container-13">
+                            <img class="container-14" src="img/container-4.svg" />
+                            <div class="text-22">Active</div>
+                          </div>
+                        </div>
+                        <div class="data-8"><div class="text-23">Oct 24, 2024</div></div>
+                        <div class="data-10 table-action-cell">
+                          <button
+                            class="action-menu-trigger"
+                            type="button"
+                            aria-expanded="false"
+                            aria-label="Open row actions"
+                          >
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          </button>
+                          <div class="action-menu" hidden>
+                            <a class="action-menu-item" href="monitor.html">Monitor</a>
+                            <a class="action-menu-item" href="edit-record.html">Edit Record</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row-2">
+                        <div class="data-11"><div class="text-wrapper-13">NEO-2024-006</div></div>
+                        <div class="data-12"><div class="text-44">Baby Mia</div></div>
+                        <div class="data-13"><div class="text-25">F</div></div>
+                        <div class="data-14"><div class="text-45">37</div></div>
+                        <div class="data-15"><div class="text-46">2800</div></div>
+                        <div class="data-16"><div class="text-47">16h</div></div>
+                        <div class="data-17">
+                          <div class="text-wrapper-16"><div class="text-32">MODERATE</div></div>
+                        </div>
+                        <div class="data-18">
+                          <img class="container-16" src="img/container-4.svg" />
+                          <div class="text-22">Active</div>
+                        </div>
+                        <div class="data-19"><div class="text-wrapper-17">Oct 22, 2024</div></div>
+                        <div class="data-20 table-action-cell">
+                          <button
+                            class="action-menu-trigger"
+                            type="button"
+                            aria-expanded="false"
+                            aria-label="Open row actions"
+                          >
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          </button>
+                          <div class="action-menu" hidden>
+                            <a class="action-menu-item" href="monitor.html">Monitor</a>
+                            <a class="action-menu-item" href="edit-record.html">Edit Record</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/system-state.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
+  </body>
+</html>

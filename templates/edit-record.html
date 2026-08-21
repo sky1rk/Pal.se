@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>Edit Record</title>
+    <link rel="stylesheet" href="statics/css/global.css" />
+    <link rel="stylesheet" href="statics/css/dashboard.css" />
+    <link rel="stylesheet" href="statics/css/edit-record.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="container">
+        <div class="aside-sidebar">
+          <div class="nav">
+            <div class="link-margin">
+              <a class="link sidebar-link" href="dashboard.html" aria-label="Open dashboard">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="8" height="8" rx="1"></rect>
+                  <rect x="13" y="3" width="8" height="5" rx="1"></rect>
+                  <rect x="13" y="10" width="8" height="11" rx="1"></rect>
+                  <rect x="3" y="13" width="8" height="8" rx="1"></rect>
+                </svg>
+                <div class="text">Dashboard</div>
+              </a>
+            </div>
+            <div class="link-wrapper">
+              <a class="div sidebar-link is-active" href="patients.html" aria-label="Open patients">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8" cy="7" r="3"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a3 3 0 0 1 0 5.74"></path>
+                </svg>
+                <div class="text-wrapper">Patients</div>
+              </a>
+            </div>
+            <div class="link-wrapper">
+              <div class="div sidebar-link" role="button" tabindex="0" aria-label="Reports">
+                <svg class="img icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19h16"></path>
+                  <path d="M7 16V8"></path>
+                  <path d="M12 16V5"></path>
+                  <path d="M17 16v-3"></path>
+                </svg>
+                <div class="text-2">Reports</div>
+              </div>
+            </div>
+            <div class="link-margin-2"></div>
+          </div>
+          <div class="button-margin">
+            <a class="group" href="login.html" aria-label="Logout">
+              <div class="div-wrapper">
+                <div class="div-wrapper">
+                  <div class="SVG">
+                    <svg class="vector logout-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                      <path d="M10 17l-5-5 5-5"></path>
+                      <path d="M5 12h13"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="text-3">Logout</div>
+            </a>
+          </div>
+          <div class="group-2">
+            <img class="image" src="images/logo.png" alt="PAL.SE logo" />
+            <img class="image-2" src="images/name.png" alt="PAL.SE" />
+          </div>
+        </div>
+
+        <div class="main-area">
+          <div class="header-topbar">
+            <div class="edit-breadcrumb" aria-label="Breadcrumb">
+              <a class="crumb-link" href="patients.html">Patients</a>
+              <svg class="crumb-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+              <span class="crumb-text">Edit Record</span>
+              <svg class="crumb-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+              <span class="crumb-current">Neonatal Sepsis Prediction</span>
+            </div>
+
+            <div class="container-wrapper">
+              <div class="container-5">
+                <div class="container-6">
+                  <div class="container-7"><div class="text-wrapper-2">Dr. Sarah Jenkins</div></div>
+                  <div class="container-7"><div class="text-wrapper-3">Neonatologist</div></div>
+                </div>
+                <a class="profile-avatar-link" href="profile.html" aria-label="Open profile page">
+                  <div class="background"><div class="text-wrapper-4">SJ</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <main class="edit-record-main">
+            <div class="edit-layout">
+              <section class="edit-left-column">
+                <div class="edit-title-group">
+                  <h1 class="edit-title">Update Patient Data</h1>
+                  <div class="edit-subtitle-row">
+                    <p class="edit-subtitle">Baby Amare (NEO-2024-001)</p>
+                    <span class="risk-badge">HIGH</span>
+                  </div>
+                </div>
+
+                <section class="edit-card">
+                  <h2>Physiological (Hourly)</h2>
+                  <div class="field-grid field-grid-four">
+                    <label class="field-group">
+                      <span class="field-label">HR (BPM)</span>
+                      <div class="field-control has-stepper">
+                        <input type="number" min="40" max="220" step="1" placeholder="HR (bpm)" />
+                        <div class="stepper-controls">
+                          <button class="stepper-button stepper-up" type="button" aria-label="Increase HR">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"></path></svg>
+                          </button>
+                          <button class="stepper-button stepper-down" type="button" aria-label="Decrease HR">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 10l-6 6-6-6"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </label>
+                    <label class="field-group">
+                      <span class="field-label">TEMP (°C)</span>
+                      <div class="field-control has-stepper">
+                        <input type="number" min="34" max="42" step="0.1" placeholder="Temp (°C)" />
+                        <div class="stepper-controls">
+                          <button class="stepper-button stepper-up" type="button" aria-label="Increase temperature">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"></path></svg>
+                          </button>
+                          <button class="stepper-button stepper-down" type="button" aria-label="Decrease temperature">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 10l-6 6-6-6"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </label>
+                    <label class="field-group">
+                      <span class="field-label">SBP / DBP</span>
+                      <div class="field-control">
+                        <input type="text" placeholder="SBP / DBP" />
+                      </div>
+                    </label>
+                    <label class="field-group">
+                      <span class="field-label">O2 SAT (%)</span>
+                      <div class="field-control has-stepper">
+                        <input type="number" min="60" max="100" step="1" placeholder="O2 Sat (%)" />
+                        <div class="stepper-controls">
+                          <button class="stepper-button stepper-up" type="button" aria-label="Increase oxygen saturation">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"></path></svg>
+                          </button>
+                          <button class="stepper-button stepper-down" type="button" aria-label="Decrease oxygen saturation">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 10l-6 6-6-6"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="field-grid field-grid-single">
+                    <label class="field-group">
+                      <span class="field-label">RESPIRATORY RATE</span>
+                      <div class="field-control has-stepper">
+                        <input type="number" min="10" max="120" step="1" placeholder="Resp Rate (/min)" />
+                        <div class="stepper-controls">
+                          <button
+                            class="stepper-button stepper-up"
+                            type="button"
+                            aria-label="Increase respiratory rate"
+                          >
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"></path></svg>
+                          </button>
+                          <button
+                            class="stepper-button stepper-down"
+                            type="button"
+                            aria-label="Decrease respiratory rate"
+                          >
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 10l-6 6-6-6"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </section>
+
+                <section class="edit-card">
+                  <h2>Current Treatment</h2>
+                  <div class="treatment-grid">
+                    <label class="field-group field-wide">
+                      <span class="field-label">ANTIBIOTIC REGIMEN</span>
+                      <div class="field-control">
+                        <input type="text" placeholder="e.g. Ampicillin + Gentamicin" />
+                      </div>
+                    </label>
+                    <label class="field-group">
+                      <span class="field-label">DURATION (DAYS)</span>
+                      <div class="field-control has-stepper">
+                        <input type="number" min="0" max="30" step="1" placeholder="Days" />
+                        <div class="stepper-controls">
+                          <button class="stepper-button stepper-up" type="button" aria-label="Increase duration">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"></path></svg>
+                          </button>
+                          <button class="stepper-button stepper-down" type="button" aria-label="Decrease duration">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 10l-6 6-6-6"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+                    </label>
+
+                    <div class="treatment-options" role="group" aria-label="Treatment options">
+                      <label class="check-row">
+                        <input type="checkbox" />
+                        <span>Oxygen Therapy</span>
+                      </label>
+                      <label class="check-row">
+                        <input type="checkbox" />
+                        <span>Phototherapy</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="action-wrap">
+                    <button class="recalculate-button" type="button">
+                      <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="3" width="14" height="18" rx="2"></rect>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                      </svg>
+                      <span>RECALCULATE RISK SCORE</span>
+                    </button>
+                  </div>
+                </section>
+              </section>
+
+              <aside class="edit-right-column">
+                <h2 class="results-title">Analysis Results</h2>
+                <section class="results-card">
+                  <span class="risk-chip">HIGH RISK</span>
+                  <div class="risk-donut" style="--risk-percent: 78">
+                    <div class="risk-donut-hole"></div>
+                    <div class="risk-donut-content">
+                      <div class="risk-percentage">78%</div>
+                      <div class="risk-probability">PROBABILITY</div>
+                    </div>
+                  </div>
+                  <div class="risk-detected">Sepsis Risk Detected</div>
+                  <div class="risk-caption">Based on Clinical &amp; Lab Biomarkers</div>
+                </section>
+
+                <div class="section-label">
+                  <svg class="section-label-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 10v6M12 7.5h.01"></path>
+                  </svg>
+                  <span>CLINICAL INTERPRETATION</span>
+                </div>
+                <section class="clinical-card">
+                  <p>
+                    <strong>Alert:</strong> Patient shows multiple early-onset indicators including PROM &gt; 18h and CRP
+                    elevation. Tachycardia and poor feeding are consistent with systemic inflammatory response.
+                  </p>
+                </section>
+
+                <section class="history-panel">
+                  <h3>PREDICTION HISTORY</h3>
+                  <div class="history-header">
+                    <span>DATE</span>
+                    <span>LEVEL</span>
+                    <span>PROB</span>
+                  </div>
+                  <div class="history-row">
+                    <div class="history-date">Oct 24, <br />08:30</div>
+                    <div class="history-level moderate">MODERATE</div>
+                    <div class="history-prob">42%</div>
+                  </div>
+                  <div class="history-row">
+                    <div class="history-date">Oct 23, <br />20:15</div>
+                    <div class="history-level low">LOW</div>
+                    <div class="history-prob">12%</div>
+                  </div>
+                </section>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/system-state.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/edit-record.js') }}"></script>
+  </body>
+</html>
