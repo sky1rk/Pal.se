@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
+import ProtectedRoute from "../auth/ProtectedRoute";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Monitor from "../pages/Monitor";
@@ -10,28 +11,33 @@ import Signup from "../pages/Signup";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Dashboard />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/",
+        element: <Dashboard />,
+      },
+      {
+        path: "/monitor",
+        element: <Monitor />,
+      },
+      {
+        path: "/patients",
+        element: <Patients />,
+      },
+      {
+        path: "/profile/:user_id",
+        element: <Profile />,
+      },
+      {
+        path: "/reports",
+        element: <Reports />,
+      },
+    ],
   },
   {
     path: "/login",
     element: <Login />,
-  },
-  {
-    path: "/monitor",
-    element: <Monitor />,
-  },
-  {
-    path: "/patients",
-    element: <Patients />,
-  },
-  {
-    path: "/profile/:user_id",
-    element: <Profile />,
-  },
-  {
-    path: "/reports",
-    element: <Reports />,
   },
   {
     path: "/signup",
