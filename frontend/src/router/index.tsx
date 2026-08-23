@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import AppShellLayout from "../layouts/AppShellLayout";
 import Dashboard from "../pages/Dashboard";
+import EditRecord from "../pages/EditRecord";
 import Login from "../pages/Login";
 import Monitor from "../pages/Monitor";
 import Patients from "../pages/Patients";
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
           {
             path: "/monitor",
             element: <Monitor />,
+          },
+          {
+            path: "/edit-record",
+            element: <EditRecord />,
           },
           {
             path: "/patients",
