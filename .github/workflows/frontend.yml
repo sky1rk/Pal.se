@@ -1,4 +1,4 @@
-name: frontend CI
+name: Frontend CI
 
 on:
   pull_request:
@@ -26,6 +26,9 @@ jobs:
         with:
           bun-version: 1.3.14
       - run: bun install --frozen-lockfile
+
+      # prettier formatting gate
+      - run: bun run format:check
 
       # eslint
       - run: bun run lint
