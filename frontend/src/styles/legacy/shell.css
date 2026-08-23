@@ -405,3 +405,73 @@
   flex-direction: column;
   gap: 15px;
 }
+
+/* Runtime-injected shell classes from legacy dashboard.js (nav links + inline icons) */
+
+.dashboard .sidebar-link {
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.dashboard .sidebar-link:not(.is-active) {
+  background-color: transparent;
+}
+
+.dashboard .sidebar-link.is-active {
+  background-color: #852a33;
+}
+
+.dashboard .sidebar-link:not(.is-active):hover {
+  background-color: rgba(133, 42, 51, 0.35);
+}
+
+.dashboard .sidebar-link:focus-visible,
+.dashboard .action-button:focus-visible,
+.dashboard .group:focus-visible {
+  outline: 2px solid #f2a400;
+  outline-offset: 2px;
+}
+
+.dashboard .sidebar-link:not(.is-active) .text,
+.dashboard .sidebar-link:not(.is-active) .text-wrapper,
+.dashboard .sidebar-link:not(.is-active) .text-2 {
+  color: #e6d5d6;
+}
+
+.dashboard .sidebar-link.is-active .text,
+.dashboard .sidebar-link.is-active .text-wrapper,
+.dashboard .sidebar-link.is-active .text-2 {
+  color: #ffffff;
+}
+
+.dashboard .icon-svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard .img.icon-svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: #e6d5d6;
+}
+
+.dashboard .sidebar-link.is-active .img.icon-svg {
+  color: #ffffff;
+}
+
+.dashboard .vector.icon-svg,
+.dashboard .vector-2.icon-svg,
+.dashboard .vector-3.icon-svg,
+.dashboard .vector-4.icon-svg,
+.dashboard .vector-5.icon-svg {
+  color: #84807a;
+}
