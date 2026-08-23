@@ -46,10 +46,10 @@ const mockAuthService: AuthService = {
       existing && existing.email === email
         ? existing
         : {
-          id: `mock-${Date.now()}`,
-          email,
-          name: email.split("@")[0] ?? email,
-        };
+            id: `mock-${Date.now()}`,
+            email,
+            name: email.split("@")[0] ?? email,
+          };
     localStorage.setItem(MOCK_USER_KEY, JSON.stringify(user));
     return user;
   },
