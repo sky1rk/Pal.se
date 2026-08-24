@@ -1,1 +1,41 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/* Inter family aliases matching legacy CSS font stacks
+   (legacy used local()-only @font-face; @fontsource provides the real files) */
+@font-face {
+  font-family: "Inter-Regular";
+  src:
+    local("Inter"),
+    url("@fontsource/inter/files/inter-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Inter-Medium";
+  src:
+    local("Inter"),
+    url("@fontsource/inter/files/inter-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Inter-SemiBold";
+  src:
+    local("Inter"),
+    url("@fontsource/inter/files/inter-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Inter-Bold";
+  src:
+    local("Inter"),
+    url("@fontsource/inter/files/inter-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+}
+
 @import "tailwindcss";
+@import "./styles/legacy/reset.css";
+@import "./styles/legacy/global.css";
+@import "./styles/legacy/shell.css";
+@import "./styles/legacy/components.css";
