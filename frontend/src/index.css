@@ -39,3 +39,6 @@
 @import "./styles/legacy/global.css";
 @import "./styles/legacy/shell.css";
 @import "./styles/legacy/components.css";
+@import "./styles/legacy/login.css";
+@import "./styles/legacy/signup.css";
+@import "./styles/legacy/inputs.css";
