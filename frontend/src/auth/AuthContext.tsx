@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
-import { authService, AUTH_MODE } from "../api/auth";
-import type { LoginCredentials, SignupCredentials, User } from "../types/auth";
+import * as authApi from "../api/auth";
+import type { AuthContextValue, LoginInput, SignupInput, User } from "../types/auth";
 import { AuthContext } from "./auth-context";
-import type { AuthContextValue } from "./auth-context";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -12,11 +11,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let active = true;
-
-    authService
+    authApi
       .me()
-      .then((session) => {
-        if (active) setUser(session);
+      .then((u) => {
+        if (active) setUser(u);
       })
       .catch(() => {
         if (active) setUser(null);
@@ -24,39 +22,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => {
         if (active) setIsLoading(false);
       });
-
     return () => {
       active = false;
     };
   }, []);
 
-  const login = useCallback(async (credentials: LoginCredentials) => {
-    const nextUser = await authService.login(credentials);
-    setUser(nextUser);
-    return nextUser;
+  const login = useCallback(async (input: LoginInput) => {
+    setUser(await authApi.login(input));
   }, []);
 
-  const signup = useCallback(async (credentials: SignupCredentials) => {
-    const nextUser = await authService.signup(credentials);
-    setUser(nextUser);
-    return nextUser;
+  const signup = useCallback(async (input: SignupInput) => {
+    setUser(await authApi.signup(input));
   }, []);
 
   const logout = useCallback(async () => {
-    await authService.logout();
+    await authApi.logout();
     setUser(null);
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({
-      mode: AUTH_MODE,
-      user,
-      isAuthenticated: user !== null,
-      isLoading,
-      login,
-      signup,
-      logout,
-    }),
+    () => ({ user, isLoading, isAuthenticated: user !== null, login, signup, logout }),
     [user, isLoading, login, signup, logout],
   );
 

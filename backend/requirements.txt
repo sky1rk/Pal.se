@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+email-validator
+sqlalchemy>=2
+greenlet
+psycopg2-binary
+bcrypt>=4
+pyjwt>=2
+python-multipart
