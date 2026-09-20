@@ -8,6 +8,7 @@ export interface User {
 export interface LoginInput {
   email: string;
   password: string;
+  remember_me?: boolean;
 }
 
 export interface SignupInput {

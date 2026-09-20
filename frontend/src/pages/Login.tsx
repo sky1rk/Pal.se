@@ -2,18 +2,30 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../auth/useAuth";
+import AuthSubmitButton from "../components/auth/AuthSubmitButton";
+import BrandMasthead from "../components/auth/BrandMasthead";
+import GlassCard from "../components/auth/GlassCard";
+import PasswordField from "../components/auth/PasswordField";
+import { FieldLabel, TextField } from "../components/auth/fields";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const STATS = [
+  { value: "24hrs", caption: "Monitor first hours of life" },
+  { value: "15+", caption: "Clinical Variables for Accuracy" },
+  { value: "Unlimited", caption: "Assessments" },
+];
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: string } | null)?.from ?? "/dashboard";
+  const from =
+    (location.state as { from?: string } | null)?.from ?? "/dashboard";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,7 +43,7 @@ export default function Login() {
     }
     setIsSubmitting(true);
     try {
-      await login({ email: trimmed, password });
+      await login({ email: trimmed, password, remember_me: rememberMe });
       navigate(from, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed.");
@@ -41,87 +53,117 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen bg-theme-white">
-      <aside className="hidden w-1/2 flex-col justify-between bg-theme-maroon p-12 text-theme-white lg:flex">
-        <div>
-          <p className="text-lg font-semibold">PAL.SE</p>
-          <h1 className="mt-8 text-4xl font-bold leading-tight">
+    <div className="min-h-screen bg-theme-white lg:grid lg:grid-cols-[51fr_49fr]">
+      {/* Brand panel */}
+      <aside className="relative overflow-hidden bg-theme-maroon text-theme-cream">
+        <div className="flex min-h-full flex-col px-8 sm:px-12 lg:px-20 lg:pt-8 lg:pb-2">
+          <BrandMasthead />
+          <h1 className="mt-10 max-w-[464px] text-4xl font-bold leading-[1.2] tracking-[-0.5px] lg:mt-24 lg:text-[44px] lg:leading-[52.8px]">
             Early-Onset Neonatal
             <br />
             Sepsis Risk Prediction
           </h1>
-          <p className="mt-4 max-w-md text-sm text-white/80">
-            Clinical decision support to identify high-risk neonates and recommend timely interventions.
+          <p className="mt-6 max-w-[466px] text-[18px] leading-[28.8px] opacity-80">
+            Clinical Decision Support System powered by machine learning to
+            identify high-risk neonates and recommend timely interventions.
+          </p>
+          <div className="mt-10 hidden grid-cols-3 gap-4 sm:grid lg:mt-14">
+            {STATS.map((s) => (
+              <GlassCard key={s.value} className="rounded-lg p-6">
+                <p className="text-[28px] font-bold leading-none">{s.value}</p>
+                <p className="mt-3 text-[13px] font-medium leading-snug opacity-70">
+                  {s.caption}
+                </p>
+              </GlassCard>
+            ))}
+          </div>
+          <p className="mt-auto hidden pt-16 text-[13px] opacity-60 lg:block">
+            © 2026 PAL.SE — Early Onset Neonatal Sepsis Risk Prediction
           </p>
         </div>
-        <p className="text-xs text-white/60">© 2026 PAL.SE — Early Onset Neonatal Sepsis Risk Prediction</p>
+        <img
+          src="/images/rob1.png"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 top-28 hidden w-[380px] rotate-[-20deg] object-cover lg:block"
+        />
       </aside>
 
-      <main className="flex w-full items-center justify-center p-8 lg:w-1/2">
-        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-5">
-          <div>
-            <h2 className="text-2xl font-bold">Welcome back</h2>
-            <p className="mt-1 text-sm text-theme-gray">Sign in to access the clinical dashboard</p>
-          </div>
+      {/* Form panel */}
+      <main className="flex items-center justify-center px-6 py-12 sm:px-12 lg:py-16">
+        <form onSubmit={handleSubmit} className="w-full max-w-[420px]">
+          <h2 className="text-[28px] font-bold text-theme-ink">Welcome back</h2>
+          <p className="mt-2 text-[15px] text-theme-gray">
+            Sign in to access the clinical dashboard
+          </p>
 
           {error && (
-            <div role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+            <div
+              role="alert"
+              className="mt-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+            >
               {error}
             </div>
           )}
 
-          <div>
-            <label htmlFor="email" className="mb-1 block text-xs font-semibold tracking-wide">
-              EMAIL ADDRESS
-            </label>
-            <input
+          <div className="mt-10">
+            <FieldLabel htmlFor="email">EMAIL ADDRESS</FieldLabel>
+            <TextField
               id="email"
               type="email"
               autoComplete="email"
-              required
               placeholder="doctor@hospital.org"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-gray-300 bg-theme-light-gray px-3 py-2 text-sm outline-none focus:border-theme-maroon"
+              onChange={setEmail}
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="mb-1 block text-xs font-semibold tracking-wide">
-              PASSWORD
-            </label>
-            <div className="relative">
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                required
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-gray-300 bg-theme-light-gray px-3 py-2 pr-16 text-sm outline-none focus:border-theme-maroon"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-theme-gray"
-              >
-                {showPassword ? "Hide" : "Show"}
-              </button>
-            </div>
+          <div className="mt-6">
+            <PasswordField
+              id="password"
+              label="PASSWORD"
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={setPassword}
+            />
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-md bg-theme-maroon py-2.5 text-sm font-semibold text-white disabled:opacity-60"
-          >
-            {isSubmitting ? "Signing in…" : "Sign In"}
-          </button>
+          <div className="mt-2 flex justify-end">
+            <button
+              type="button"
+              className="text-[13px] font-medium text-theme-crimson hover:text-theme-crimson-hover"
+            >
+              Forgot password?
+            </button>
+          </div>
 
-          <p className="text-center text-sm text-theme-gray">
+          <label
+            htmlFor="remember-me"
+            className="mt-1 flex cursor-pointer items-center gap-3 text-sm text-theme-gray"
+          >
+            <input
+              id="remember-me"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-[18px] w-[18px] cursor-pointer rounded accent-theme-crimson"
+            />
+            Remember me
+          </label>
+
+          <div className="mt-6">
+            <AuthSubmitButton loading={isSubmitting} loadingLabel="Signing in…">
+              Sign In
+            </AuthSubmitButton>
+          </div>
+
+          <p className="mt-6 text-center text-[13px] text-theme-gray">
             Don&apos;t have an account?{" "}
-            <Link to="/signup" className="font-semibold text-theme-maroon">
+            <Link
+              to="/signup"
+              className="font-semibold text-theme-crimson hover:text-theme-crimson-hover"
+            >
               Sign up.
             </Link>
           </p>
