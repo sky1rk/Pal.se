@@ -6,7 +6,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.config import COOKIE_NAME, COOKIE_SECURE, FRONTEND_ORIGIN, JWT_EXPIRE_MINUTES
+from app.config import (
+    COOKIE_NAME,
+    COOKIE_SECURE,
+    FRONTEND_ORIGIN,
+    JWT_EXPIRE_MINUTES,
+    REMEMBER_ME_EXPIRE_DAYS,
+)
 from app.db import Base, engine, get_db
 from app.deps import get_current_user_optional
 from app.models import User
@@ -40,7 +46,7 @@ def _to_user_out(user: User) -> UserOut:
     )
 
 
-def _set_auth_cookie(response: Response, token: str) -> None:
+def _set_auth_cookie(response: Response, token: str, max_age_seconds: int | None = None) -> None:
     response.set_cookie(
         key=COOKIE_NAME,
         value=token,
@@ -48,7 +54,7 @@ def _set_auth_cookie(response: Response, token: str) -> None:
         secure=COOKIE_SECURE,
         samesite="lax",
         path="/",
-        max_age=JWT_EXPIRE_MINUTES * 60,
+        max_age=max_age_seconds if max_age_seconds is not None else JWT_EXPIRE_MINUTES * 60,
     )
 
 
@@ -86,7 +92,14 @@ def login(payload: LoginIn, response: Response, db: Session = Depends(get_db)) -
     user = db.query(User).filter(User.email == email).first()
     if not user or not verify_password(payload.password, user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
-    _set_auth_cookie(response, create_access_token(user.id))
+    expires_minutes = (
+        REMEMBER_ME_EXPIRE_DAYS * 24 * 60 if payload.remember_me else JWT_EXPIRE_MINUTES
+    )
+    _set_auth_cookie(
+        response,
+        create_access_token(user.id, expires_minutes=expires_minutes),
+        max_age_seconds=expires_minutes * 60,
+    )
     return AuthResponse(user=_to_user_out(user))
 
 

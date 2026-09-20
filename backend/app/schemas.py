@@ -13,6 +13,7 @@ class SignupIn(BaseModel):
 class LoginIn(BaseModel):
     email: EmailStr
     password: str = Field(min_length=1, max_length=128)
+    remember_me: bool = False
 
 
 class UserOut(BaseModel):

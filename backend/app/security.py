@@ -20,12 +20,12 @@ def verify_password(password: str, password_hash: str) -> bool:
         return False
 
 
-def create_access_token(user_id: str) -> str:
+def create_access_token(user_id: str, expires_minutes: int | None = None) -> str:
     now = datetime.now(timezone.utc)
     payload = {
         "sub": user_id,
         "iat": int(now.timestamp()),
-        "exp": int((now + timedelta(minutes=JWT_EXPIRE_MINUTES)).timestamp()),
+        "exp": int((now + timedelta(minutes=expires_minutes or JWT_EXPIRE_MINUTES)).timestamp()),
     }
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
