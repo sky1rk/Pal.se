@@ -1,15 +1,4 @@
 import { createContext } from "react";
-
-import type { LoginCredentials, SignupCredentials, User } from "../types/auth";
-
-export interface AuthContextValue {
-  readonly mode: "mock" | "jwt";
-  readonly user: User | null;
-  readonly isAuthenticated: boolean;
-  readonly isLoading: boolean;
-  login: (credentials: LoginCredentials) => Promise<User>;
-  signup: (credentials: SignupCredentials) => Promise<User>;
-  logout: () => Promise<void>;
-}
+import type { AuthContextValue } from "../types/auth";
 
 export const AuthContext = createContext<AuthContextValue | null>(null);

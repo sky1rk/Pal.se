@@ -1,20 +1,49 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
 
-import { AuthProvider } from "./auth/AuthContext";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider } from "react-router-dom";
-
-import { queryClient } from "./lib/query-client";
-import { router } from "./router";
 import "./index.css";
+import { AuthProvider } from "./auth/AuthContext.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import AppShell from "./layouts/AppShell.tsx";
+import App from "./App.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import Login from "./pages/Login.tsx";
+import NotFound from "./pages/NotFound.tsx";
+import Patients from "./pages/Patients.tsx";
+import Reports from "./pages/Reports.tsx";
+import Signup from "./pages/Signup.tsx";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </QueryClientProvider>
-  </React.StrictMode>,
+const root = document.getElementById("root")!;
+if (!root) {
+  throw Error("Root element cannot be found or does not exist.");
+}
+
+const router = createBrowserRouter([
+  { path: "/login", Component: Login },
+  { path: "/signup", Component: Signup },
+  {
+    Component: ProtectedRoute,
+    children: [
+      {
+        Component: AppShell,
+        children: [
+          { path: "/", Component: App },
+          { path: "/dashboard", Component: Dashboard },
+          { path: "/patients", Component: Patients },
+          { path: "/reports", Component: Reports },
+        ],
+      },
+    ],
+  },
+  { path: "*", Component: NotFound },
+]);
+
+createRoot(root).render(
+  <StrictMode>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </StrictMode>,
 );
