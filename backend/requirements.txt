@@ -8,3 +8,14 @@ psycopg2-binary
 bcrypt>=4
 pyjwt>=2
 python-multipart
+# EOS model stack. scikit-learn and xgboost are pinned to the era of the
+# saved artifacts (built with sklearn 1.5.2); newer sklearn cannot unpickle
+# the imputers (SimpleImputer._fill_dtype). torch/pytorch-forecasting are
+# intentionally NOT required: predict_tft() uses the vital-sign heuristic
+# fallback unless the optional live-TFT runtime + training CSV are provided.
+joblib
+numpy
+pandas
+scipy
+scikit-learn==1.5.2
+xgboost==2.1.4
