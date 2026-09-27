@@ -86,6 +86,59 @@ bun run lint
 
 ---
 
+## EOS prediction API (current stack)
+
+The FastAPI backend now serves the EOS model stack directly; the React
+dashboard posts clinician-entered fields and receives the residual-ensemble
+result. All prediction endpoints require auth (the `access_token` cookie).
+
+### Model artifacts (`backend/models/`)
+
+```text
+backend/models/eos_xgboost_pipeline.joblib   # static branch (sklearn 1.5.2 / xgboost 2.1.4)
+backend/models/eos_residual_ensemble.joblib   # fusion: final = clip(xgb + residual, 0, 1)
+backend/models/eos_tft_state_dict.pt          # temporal branch (optional live runtime)
+```
+
+Backend code: `backend/app/ml/` (`features.py`, `xgboost_service.py`,
+`tft_service.py`, `ensemble.py`). The decision threshold comes from the
+residual artifact (`residual_threshold` = 0.93).
+
+TFT status: the `.pt` state dict is wired for future live inference, but the
+training CSV + `torch`/`pytorch-forecasting` runtime are not vendored into
+the image, so `predict_tft()` currently returns the temporal vital-sign
+heuristic and reports `tft_source: "temporal_vitals_fallback"` (same formula
+as the legacy Flask fallback). To enable live TFT later: install the torch
+runtime, point `TFT_DATASET_PATH` at the training CSV, and implement the
+forward pass in `tft_service._try_live_tft`.
+
+### Endpoints
+
+```text
+POST /api/predictions   # run XGBoost + TFT + residual fusion; upserts patient, prediction, report
+GET  /api/predictions   # history (newest first, ?limit=20 default)
+GET  /api/patients      # patient list with latest risk/probability
+GET  /api/reports       # generated reports
+```
+
+`POST /api/predictions` accepts the dashboard JSON documented under
+"Dashboard Input Mapping" below (all fields optional — missing values are
+imputed/defaulted to match the saved artifacts) and returns the contract
+documented under "Prediction API Contract". Frontend: `frontend/src/api/predictions.ts`
++ `Dashboard.tsx` (36-field form, result card, history), `Patients.tsx`,
+`Reports.tsx`; cross-tab refresh uses `BroadcastChannel("palse-updates")`
+with a `localStorage` fallback, mirroring legacy `system-state.js`.
+
+### Data privacy: predictions are per-user
+
+Patients, predictions, and reports are owned by the submitting account
+(`user_id` on all three tables; patients use a composite
+`(patient_id, user_id)` key). Every endpoint filters by the signed-in user,
+so one account can never see another's results — submitting the same
+`patient_id` as someone else creates an independent record.
+
+---
+
 ## Legacy Flask system (reference)
 
 The sections below document the original Flask-backed EOS prediction system

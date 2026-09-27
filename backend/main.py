@@ -16,6 +16,7 @@ from app.config import (
 from app.db import Base, engine, get_db
 from app.deps import get_current_user_optional
 from app.models import User
+from app.routers.predictions import router as predictions_router
 from app.schemas import AuthResponse, LoginIn, MeResponse, SignupIn, UserOut
 from app.security import create_access_token, hash_password, verify_password
 
@@ -35,6 +36,8 @@ app.add_middleware(
 )
 
 Base.metadata.create_all(bind=engine)
+
+app.include_router(predictions_router)
 
 
 def _to_user_out(user: User) -> UserOut:
