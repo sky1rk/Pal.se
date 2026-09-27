@@ -1,5 +1,149 @@
 # PAL.SE Flask Backend and Residual Ensemble Integration
 
+## Setup & Development Environment (current stack)
+
+Auth API (FastAPI + PostgreSQL) runs in Docker; the React frontend runs on the
+host with hot reloading.
+
+| Service  | Where it runs | URL                   |
+| -------- | ------------- | --------------------- |
+| Frontend | host (`bun`)  | http://localhost:5173 |
+| Backend  | Docker        | http://localhost:8000 |
+| Postgres | Docker        | localhost:5432        |
+
+### Prerequisites
+
+- Docker with Compose v2 (`docker compose version`)
+- Bun (`bun --version`)
+- Ports `5173`, `8000`, `5432` free
+
+### 1. Configure environment (optional)
+
+Defaults work out of the box. To override, copy the example file:
+
+```bash
+cp .env.example .env
+```
+
+Set a real secret before any shared/production use:
+
+```bash
+JWT_SECRET=<long-random-string-min-32-chars>
+```
+
+Available variables (`JWT_SECRET`, `JWT_EXPIRE_MINUTES`,
+`REMEMBER_ME_EXPIRE_DAYS`, `POSTGRES_USER/PASSWORD/DB/PORT`) are documented in
+`.env.example`.
+
+### 2. Start db + backend
+
+```bash
+docker compose up --build -d
+docker compose ps              # db + backend should be Up (backend: healthy)
+curl http://localhost:8000/health   # {"status":"ok"}
+```
+
+### 3. Start the frontend
+
+```bash
+cd frontend
+bun install
+bun run dev                    # http://localhost:5173, with hot reloading
+```
+
+Vite proxies `/api/*` to the backend, so no CORS setup is needed. Open
+http://localhost:5173/signup to create an account, then sign in. Auth uses an
+HttpOnly `access_token` cookie (60-minute session, 30-day when "Remember me"
+is checked).
+
+### Useful commands
+
+```bash
+docker compose logs -f backend   # follow backend logs
+docker compose logs -f db        # follow postgres logs
+docker compose down              # stop containers (data volume is kept)
+docker compose down -v           # stop AND delete all postgres data
+
+# Inspect the auth database
+docker compose exec db psql -U palse -d palse -c "SELECT email, created_at FROM users;"
+
+# Frontend checks (run in frontend/)
+bun run build
+bun run lint
+```
+
+### Troubleshooting
+
+- `port is already allocated` on `up`: another process owns the port
+  (commonly a local `bun dev` on `5173` or a local backend on `8000`).
+  Stop it or change the mapping.
+- Backend unhealthy / DB connection errors: check
+  `docker compose logs db`, then restart with `docker compose restart backend`.
+- After changing `backend/requirements.txt`: rebuild with
+  `docker compose up --build -d`.
+- Stale `node_modules` or odd frontend behavior: `rm -rf frontend/node_modules`
+  and re-run `bun install`.
+
+---
+
+## EOS prediction API (current stack)
+
+The FastAPI backend now serves the EOS model stack directly; the React
+dashboard posts clinician-entered fields and receives the residual-ensemble
+result. All prediction endpoints require auth (the `access_token` cookie).
+
+### Model artifacts (`backend/models/`)
+
+```text
+backend/models/eos_xgboost_pipeline.joblib   # static branch (sklearn 1.5.2 / xgboost 2.1.4)
+backend/models/eos_residual_ensemble.joblib   # fusion: final = clip(xgb + residual, 0, 1)
+backend/models/eos_tft_state_dict.pt          # temporal branch (optional live runtime)
+```
+
+Backend code: `backend/app/ml/` (`features.py`, `xgboost_service.py`,
+`tft_service.py`, `ensemble.py`). The decision threshold comes from the
+residual artifact (`residual_threshold` = 0.93).
+
+TFT status: the `.pt` state dict is wired for future live inference, but the
+training CSV + `torch`/`pytorch-forecasting` runtime are not vendored into
+the image, so `predict_tft()` currently returns the temporal vital-sign
+heuristic and reports `tft_source: "temporal_vitals_fallback"` (same formula
+as the legacy Flask fallback). To enable live TFT later: install the torch
+runtime, point `TFT_DATASET_PATH` at the training CSV, and implement the
+forward pass in `tft_service._try_live_tft`.
+
+### Endpoints
+
+```text
+POST /api/predictions   # run XGBoost + TFT + residual fusion; upserts patient, prediction, report
+GET  /api/predictions   # history (newest first, ?limit=20 default)
+GET  /api/patients      # patient list with latest risk/probability
+GET  /api/reports       # generated reports
+```
+
+`POST /api/predictions` accepts the dashboard JSON documented under
+"Dashboard Input Mapping" below (all fields optional — missing values are
+imputed/defaulted to match the saved artifacts) and returns the contract
+documented under "Prediction API Contract". Frontend: `frontend/src/api/predictions.ts`
++ `Dashboard.tsx` (36-field form, result card, history), `Patients.tsx`,
+`Reports.tsx`; cross-tab refresh uses `BroadcastChannel("palse-updates")`
+with a `localStorage` fallback, mirroring legacy `system-state.js`.
+
+### Data privacy: predictions are per-user
+
+Patients, predictions, and reports are owned by the submitting account
+(`user_id` on all three tables; patients use a composite
+`(patient_id, user_id)` key). Every endpoint filters by the signed-in user,
+so one account can never see another's results — submitting the same
+`patient_id` as someone else creates an independent record.
+
+---
+
+## Legacy Flask system (reference)
+
+The sections below document the original Flask-backed EOS prediction system
+(`app.py`, `templates/`, `static/`).
+
 ## Purpose
 This folder contains the Flask-backed PAL.SE user interface for early-onset neonatal sepsis risk prediction. The dashboard accepts clinician-entered patient, maternal, laboratory, clinical sign, treatment, and vital-sign details, sends them to Flask, runs the EOS model stack, then updates the dashboard result, prediction history, patients list, and generated reports from backend state.
 

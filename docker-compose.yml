@@ -1,0 +1,39 @@
+# Local dev: docker compose up --build -d  (db + backend only)
+# Frontend runs on the host: cd frontend && bun install && bun run dev
+# Vite (host :5173) proxies /api to the backend (host :8000).
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-palse}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-palse}
+      POSTGRES_DB: ${POSTGRES_DB:-palse}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - palse_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-palse}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-palse}:${POSTGRES_PASSWORD:-palse}@db:5432/${POSTGRES_DB:-palse}
+      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me}
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-60}
+      REMEMBER_ME_EXPIRE_DAYS: ${REMEMBER_ME_EXPIRE_DAYS:-30}
+      COOKIE_SECURE: "false"
+      FRONTEND_ORIGIN: http://localhost:5173
+    ports:
+      - "8000:8000"
+
+volumes:
+  palse_pgdata:

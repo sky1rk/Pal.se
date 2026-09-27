@@ -1,0 +1,40 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    paths: ["frontend/**", ".github/workflows/frontend.yml"]
+  push:
+    branches: [main]
+    paths: ["frontend/**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+
+      # prettier formatting gate
+      - run: bun run format:check
+
+      # eslint
+      - run: bun run lint
+
+      # explicit typecheck
+      - run: bunx tsc -b
+
+      # prod build
+      - run: bun run build
