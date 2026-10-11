@@ -33,6 +33,25 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, nullable=False)
 
 
+class DeactivatedUser(Base):
+    """Soft-delete marker for an account.
+
+    Stored in its own table (rather than a boolean column on ``users``) so the
+    existing schema does not need an in-place migration: ``create_all`` adds
+    the table on startup. A row here hides the account and blocks sign-in while
+    keeping all of the user's data intact and recoverable.
+    """
+
+    __tablename__ = "deactivated_users"
+
+    user_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("users.id"), primary_key=True
+    )
+    deactivated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow, nullable=False
+    )
+
+
 class Patient(Base):
     """Neonate record owned by the submitting user.
 

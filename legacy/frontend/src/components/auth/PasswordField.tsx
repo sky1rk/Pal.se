@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FieldLabel } from "./fields";
-import { EyeIcon } from "./icons";
+import { EyeIcon, EyeOffIcon } from "./icons";
 
 export default function PasswordField({
   id,
@@ -10,6 +10,7 @@ export default function PasswordField({
   placeholder,
   value,
   onChange,
+  required = true,
 }: {
   id: string;
   label: string;
@@ -18,6 +19,7 @@ export default function PasswordField({
   placeholder?: string;
   value: string;
   onChange: (v: string) => void;
+  required?: boolean;
 }) {
   const [visible, setVisible] = useState(false);
   return (
@@ -29,19 +31,20 @@ export default function PasswordField({
           name={name}
           type={visible ? "text" : "password"}
           autoComplete={autoComplete}
-          required
+          required={required}
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-md border border-black/[0.08] bg-theme-field py-3 pl-4 pr-12 text-[15px] text-theme-field-text outline-none placeholder:text-theme-placeholder focus:border-theme-crimson"
+          className="w-full rounded-md border border-black/[0.08] bg-theme-field py-3 pl-4 pr-12 text-[15px] text-theme-field-text outline-none transition placeholder:text-theme-placeholder focus:border-theme-crimson focus:ring-2 focus:ring-theme-crimson/15"
         />
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Hide password" : "Show password"}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-theme-gray hover:text-theme-field-text"
+          aria-pressed={visible}
+          className="absolute right-4 top-1/2 -translate-y-1/2 rounded text-theme-gray transition-colors hover:text-theme-field-text"
         >
-          <EyeIcon />
+          {visible ? <EyeOffIcon /> : <EyeIcon />}
         </button>
       </div>
     </div>

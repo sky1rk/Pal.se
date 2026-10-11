@@ -16,6 +16,20 @@ class LoginIn(BaseModel):
     remember_me: bool = False
 
 
+class ProfileUpdateIn(BaseModel):
+    """Partial update of the signed-in user's own profile.
+
+    Password change is optional and requires the current password. Only the
+    supplied fields are applied.
+    """
+
+    first_name: str | None = Field(default=None, min_length=1, max_length=100)
+    last_name: str | None = Field(default=None, min_length=1, max_length=100)
+    email: EmailStr | None = None
+    current_password: str | None = Field(default=None, max_length=128)
+    new_password: str | None = Field(default=None, min_length=8, max_length=128)
+
+
 class UserOut(BaseModel):
     id: str
     first_name: str
@@ -99,6 +113,71 @@ class PatientOut(BaseModel):
     latest_prediction_id: int | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
+
+
+class PatientDetailOut(PatientOut):
+    """Patient plus the full stored dashboard payload (static + temporal)."""
+
+    payload: dict[str, Any] | None = None
+
+
+class PatientUpdateIn(BaseModel):
+    """Partial edit of a patient's static variables.
+
+    Only keys present in the request are considered (``exclude_unset``) and
+    the router restricts writes to an allow-list so temporal ``{vital}_{h}h``
+    keys and ``patient_id`` cannot be clobbered.
+    """
+
+    model_config = {"extra": "allow"}
+
+    sex: str | None = None
+    gestational_age_weeks: float | str | None = None
+    birth_weight_g: float | str | None = None
+    delivery_mode: str | None = None
+    place_of_birth: str | None = None
+    multiple_birth: int | str | bool | None = None
+    age_at_onset_hours: float | str | None = None
+    apgar_1min: float | str | None = None
+    apgar_5min: float | str | None = None
+    resuscitation_at_birth: int | str | bool | None = None
+    maternal_age_years: float | str | None = None
+    anc_4plus: int | str | bool | None = None
+    prom_over_18h: int | str | bool | None = None
+    maternal_fever: int | str | bool | None = None
+    maternal_uti: int | str | bool | None = None
+    maternal_hiv: int | str | bool | None = None
+    unclean_cord_care: int | str | bool | None = None
+    poor_feeding: int | str | bool | None = None
+    lethargy: int | str | bool | None = None
+    convulsions: int | str | bool | None = None
+    respiratory_distress: int | str | bool | None = None
+    jaundice: int | str | bool | None = None
+    bulging_fontanelle: int | str | bool | None = None
+    abdominal_distension: int | str | bool | None = None
+    umbilical_redness: int | str | bool | None = None
+    skin_pustules: int | str | bool | None = None
+    crp_mg_l: float | str | None = None
+    wbc_count: float | str | None = None
+    platelet_count: float | str | None = None
+    central_venous_line: int | str | bool | None = None
+    inotrope: int | str | bool | None = None
+    intubate: int | str | bool | None = None
+    duration_days: float | str | None = None
+    oxygen_therapy: int | str | bool | None = None
+
+
+class VitalReadingIn(BaseModel):
+    """One temporal vital-sign reading at a TFT timepoint (hours since birth)."""
+
+    model_config = {"extra": "allow"}
+
+    hour: int
+    temperature_c: float | str | None = None
+    heart_rate_bpm: float | str | None = None
+    blood_pressure: str | None = None
+    oxygen_saturation_pct: float | str | None = None
+    respiratory_rate_bpm: float | str | None = None
 
 
 class PredictionReportOut(BaseModel):

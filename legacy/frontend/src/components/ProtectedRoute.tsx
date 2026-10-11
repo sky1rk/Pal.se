@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useAuth } from "../auth/useAuth";
+import Spinner from "./ui/Spinner";
 
 export default function ProtectedRoute() {
   const { user, isLoading } = useAuth();
@@ -7,7 +8,8 @@ export default function ProtectedRoute() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-theme-light-gray">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-theme-light-gray">
+        <Spinner className="h-6 w-6 text-theme-maroon" />
         <p className="text-sm text-theme-gray">Loading…</p>
       </div>
     );

@@ -1,5 +1,5 @@
 import { apiFetch } from "./client";
-import type { LoginInput, SignupInput, User } from "../types/auth";
+import type { LoginInput, ProfileUpdateInput, SignupInput, User } from "../types/auth";
 
 export async function signup(input: SignupInput): Promise<User> {
   const data = await apiFetch<{ user: User }>("/api/auth/signup", {
@@ -33,4 +33,16 @@ export async function logout(): Promise<void> {
   } catch {
     // Cookie may already be expired; treat as logged out.
   }
+}
+
+export async function updateProfile(input: ProfileUpdateInput): Promise<User> {
+  const data = await apiFetch<{ user: User }>("/api/auth/me", {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+  return data.user;
+}
+
+export async function deleteAccount(): Promise<void> {
+  await apiFetch<{ ok: boolean }>("/api/auth/me", { method: "DELETE" });
 }

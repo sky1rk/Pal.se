@@ -56,7 +56,7 @@ export default function Login() {
     <div className="min-h-screen bg-theme-white lg:grid lg:grid-cols-[51fr_49fr]">
       {/* Brand panel */}
       <aside className="relative overflow-hidden bg-theme-maroon text-theme-cream">
-        <div className="flex min-h-full flex-col px-8 sm:px-12 lg:px-20 lg:pt-8 lg:pb-2">
+        <div className="relative z-10 flex min-h-full flex-col px-8 sm:px-12 lg:px-20 lg:pt-8 lg:pb-2">
           <BrandMasthead />
           <h1 className="mt-10 max-w-[464px] text-4xl font-bold leading-[1.2] tracking-[-0.5px] lg:mt-24 lg:text-[44px] lg:leading-[52.8px]">
             Early-Onset Neonatal
@@ -85,7 +85,7 @@ export default function Login() {
           src="/images/rob1.png"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 top-28 hidden w-[380px] rotate-[-20deg] object-cover lg:block"
+          className="pointer-events-none absolute -right-16 bottom-10 z-0 hidden h-[340px] w-auto rotate-[-16deg] select-none object-contain opacity-80 lg:block"
         />
       </aside>
 
