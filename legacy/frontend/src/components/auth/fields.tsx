@@ -10,7 +10,7 @@ export function FieldLabel({ htmlFor, children }: { htmlFor: string; children: s
 }
 
 const INPUT_CLS =
-  "w-full rounded-md border border-black/[0.08] bg-theme-field px-4 py-3 text-[15px] text-theme-field-text outline-none placeholder:text-theme-placeholder focus:border-theme-crimson";
+  "w-full rounded-md border border-black/[0.08] bg-theme-field px-4 py-3 text-[15px] text-theme-field-text outline-none transition placeholder:text-theme-placeholder focus:border-theme-crimson focus:ring-2 focus:ring-theme-crimson/15";
 
 export function TextField({
   id,

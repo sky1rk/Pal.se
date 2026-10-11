@@ -164,6 +164,7 @@ export default function Signup() {
               value={password}
               onChange={setPassword}
             />
+            <p className="mt-1.5 text-xs text-theme-placeholder">Minimum 8 characters.</p>
           </div>
 
           <div className="mt-5">

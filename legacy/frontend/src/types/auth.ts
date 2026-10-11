@@ -18,6 +18,14 @@ export interface SignupInput {
   password: string;
 }
 
+export interface ProfileUpdateInput {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  current_password?: string;
+  new_password?: string;
+}
+
 export interface AuthContextValue {
   user: User | null;
   isLoading: boolean;
@@ -25,4 +33,6 @@ export interface AuthContextValue {
   login: (input: LoginInput) => Promise<void>;
   signup: (input: SignupInput) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (input: ProfileUpdateInput) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }

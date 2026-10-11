@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: palse-api
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "alembic -c backend/alembic.ini upgrade head && uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.6
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_JWKS_URL
+        sync: false
+      - key: SUPABASE_JWT_AUD
+        value: authenticated
+      - key: FRONTEND_ORIGIN
+        sync: false

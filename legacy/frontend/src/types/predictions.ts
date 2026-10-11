@@ -61,6 +61,21 @@ export interface PatientRow {
   updated_at: string | null;
 }
 
+export interface PatientDetail extends PatientRow {
+  payload: Record<string, unknown> | null;
+}
+
+export type PatientUpdateInput = Record<string, string | number>;
+
+export interface VitalReadingInput {
+  hour: number;
+  temperature_c?: string;
+  heart_rate_bpm?: string;
+  blood_pressure?: string;
+  oxygen_saturation_pct?: string;
+  respiratory_rate_bpm?: string;
+}
+
 export interface ReportRow {
   id: number;
   prediction_id: number;

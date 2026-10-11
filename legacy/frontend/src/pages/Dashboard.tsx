@@ -2,157 +2,25 @@ import { useCallback, useEffect, useState } from "react";
 import {
   createPrediction,
   listPredictions,
-  notifyPredictionCreated,
-  onPredictionCreated,
+  notifyDataChanged,
+  onDataChanged,
 } from "../api/predictions";
 import { ApiError } from "../api/client";
 import type { PredictionResult } from "../types/predictions";
-
-type FieldKind = "text" | "number" | "select" | "checkbox";
-
-interface FieldSpec {
-  name: string;
-  label: string;
-  kind: FieldKind;
-  options?: Array<{ value: string; label: string }>;
-  placeholder?: string;
-}
-
-interface FieldSection {
-  title: string;
-  fields: FieldSpec[];
-}
-
-const YES_NO = [
-  { value: "", label: "Select…" },
-  { value: "1", label: "Yes" },
-  { value: "0", label: "No" },
-];
-
-// NOTE: "respiratory_distress" (double "s") is the literal feature name in
-// the saved XGBoost artifact — keep that spelling.
-const SECTIONS: FieldSection[] = [
-  {
-    title: "Patient & Birth",
-    fields: [
-      { name: "patient_id", label: "Patient ID", kind: "text", placeholder: "NEO-2024-001" },
-      {
-        name: "sex",
-        label: "Sex",
-        kind: "select",
-        options: [
-          { value: "", label: "Select…" },
-          { value: "male", label: "Male" },
-          { value: "female", label: "Female" },
-        ],
-      },
-      { name: "gestational_age_weeks", label: "Gestational age (weeks)", kind: "number" },
-      { name: "birth_weight_g", label: "Birth weight (g)", kind: "number" },
-      {
-        name: "delivery_mode",
-        label: "Delivery mode",
-        kind: "select",
-        options: [
-          { value: "", label: "Select…" },
-          { value: "vaginal", label: "Vaginal" },
-          { value: "cesarean", label: "Cesarean" },
-        ],
-      },
-      {
-        name: "place_of_birth",
-        label: "Place of birth",
-        kind: "select",
-        options: [
-          { value: "", label: "Select…" },
-          { value: "this_facility", label: "This facility" },
-          { value: "other_facility", label: "Other facility" },
-          { value: "home", label: "Home" },
-          { value: "in_transit", label: "In transit" },
-        ],
-      },
-      { name: "multiple_birth", label: "Multiple birth", kind: "checkbox" },
-      { name: "age_at_onset_hours", label: "Age at onset (hours)", kind: "number" },
-      { name: "apgar_1min", label: "APGAR 1 min", kind: "number" },
-      { name: "apgar_5min", label: "APGAR 5 min", kind: "number" },
-      { name: "resuscitation_at_birth", label: "Resuscitation at birth", kind: "checkbox" },
-    ],
-  },
-  {
-    title: "Maternal",
-    fields: [
-      { name: "maternal_age_years", label: "Maternal age (years)", kind: "number" },
-      { name: "anc_4plus", label: "ANC 4+ visits", kind: "select", options: YES_NO },
-      { name: "prom_over_18h", label: "PROM over 18h", kind: "select", options: YES_NO },
-      { name: "maternal_fever", label: "Maternal fever", kind: "select", options: YES_NO },
-      { name: "maternal_uti", label: "Maternal UTI", kind: "checkbox" },
-      { name: "maternal_hiv", label: "Maternal HIV", kind: "checkbox" },
-      { name: "unclean_cord_care", label: "Unclean cord care", kind: "checkbox" },
-    ],
-  },
-  {
-    title: "Neonatal Signs",
-    fields: [
-      { name: "poor_feeding", label: "Poor feeding", kind: "checkbox" },
-      { name: "lethargy", label: "Lethargy", kind: "checkbox" },
-      { name: "convulsions", label: "Convulsions", kind: "checkbox" },
-      { name: "respiratory_distress", label: "Respiratory distress", kind: "checkbox" },
-      { name: "jaundice", label: "Jaundice", kind: "checkbox" },
-      { name: "bulging_fontanelle", label: "Bulging fontanelle", kind: "checkbox" },
-      { name: "abdominal_distension", label: "Abdominal distension", kind: "checkbox" },
-      { name: "umbilical_redness", label: "Umbilical redness", kind: "checkbox" },
-      { name: "skin_pustules", label: "Skin pustules", kind: "checkbox" },
-    ],
-  },
-  {
-    title: "Laboratory",
-    fields: [
-      { name: "crp_mg_l", label: "CRP (mg/L)", kind: "number" },
-      { name: "wbc_count", label: "WBC count", kind: "number" },
-      { name: "platelet_count", label: "Platelet count", kind: "number" },
-    ],
-  },
-  {
-    title: "Vital Signs",
-    fields: [
-      { name: "temperature_c", label: "Temperature (°C)", kind: "number" },
-      { name: "heart_rate_bpm", label: "Heart rate (bpm)", kind: "number" },
-      {
-        name: "blood_pressure",
-        label: "Blood pressure (SBP/DBP)",
-        kind: "text",
-        placeholder: "70/42",
-      },
-      { name: "oxygen_saturation_pct", label: "Oxygen saturation (%)", kind: "number" },
-      { name: "respiratory_rate_bpm", label: "Respiratory rate (/min)", kind: "number" },
-    ],
-  },
-  {
-    title: "Treatment",
-    fields: [
-      { name: "central_venous_line", label: "Central venous line", kind: "select", options: YES_NO },
-      { name: "inotrope", label: "Inotrope", kind: "select", options: YES_NO },
-      { name: "intubate", label: "Intubated", kind: "select", options: YES_NO },
-      { name: "duration_days", label: "Duration (days)", kind: "number" },
-      { name: "oxygen_therapy", label: "Oxygen therapy", kind: "checkbox" },
-    ],
-  },
-];
-
-function initialValues(): Record<string, string> {
-  const values: Record<string, string> = {};
-  for (const section of SECTIONS) {
-    for (const field of section.fields) {
-      values[field.name] = field.kind === "checkbox" ? "0" : "";
-    }
-  }
-  return values;
-}
-
-function riskStyle(riskLabel: string): string {
-  if (riskLabel === "HIGH RISK") return "bg-red-100 text-red-800";
-  if (riskLabel === "MODERATE RISK") return "bg-amber-100 text-amber-800";
-  return "bg-green-100 text-green-800";
-}
+import Button from "../components/ui/Button";
+import Card from "../components/ui/Card";
+import EmptyState from "../components/ui/EmptyState";
+import PageHeader from "../components/ui/PageHeader";
+import RiskBadge from "../components/ui/RiskBadge";
+import Spinner from "../components/ui/Spinner";
+import PredictionResultCard from "../components/PredictionResultCard";
+import SectionGrid from "../components/SectionGrid";
+import VitalSignsPanel from "../components/VitalSignsPanel";
+import { buildReadingPayload, initialValues, SECTIONS } from "../components/patientForm";
+import { VITAL_SIGNS_SECTION_TITLE } from "../components/patientForm";
+import { createReading, VITAL_TIMEPOINTS } from "../components/vitalSigns";
+import type { ReadingVitalKey, VitalReading } from "../components/vitalSigns";
+import { AlertTriangleIcon, ArrowRightIcon, InboxIcon } from "../components/ui/icons";
 
 function formatDate(value: string | null): string {
   if (!value) return "—";
@@ -160,11 +28,9 @@ function formatDate(value: string | null): string {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
 }
 
-const inputClass =
-  "w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm focus:border-theme-maroon focus:outline-none";
-
 export default function Dashboard() {
   const [values, setValues] = useState<Record<string, string>>(initialValues);
+  const [readings, setReadings] = useState<VitalReading[]>([]);
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [history, setHistory] = useState<PredictionResult[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -180,11 +46,28 @@ export default function Dashboard() {
 
   useEffect(() => {
     refreshHistory();
-    return onPredictionCreated(refreshHistory);
+    return onDataChanged(refreshHistory);
   }, [refreshHistory]);
 
   function setField(name: string, value: string): void {
     setValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function addReading(): void {
+    const used = new Set(readings.map((reading) => reading.hour));
+    const next = VITAL_TIMEPOINTS.find((hour) => !used.has(String(hour)));
+    if (next === undefined) return;
+    setReadings((prev) => [...prev, createReading(next)]);
+  }
+
+  function removeReading(id: string): void {
+    setReadings((prev) => prev.filter((reading) => reading.id !== id));
+  }
+
+  function updateReading(id: string, field: ReadingVitalKey | "hour", value: string): void {
+    setReadings((prev) =>
+      prev.map((reading) => (reading.id === id ? { ...reading, [field]: value } : reading)),
+    );
   }
 
   async function handleSubmit(event: React.FormEvent): Promise<void> {
@@ -192,9 +75,9 @@ export default function Dashboard() {
     setIsSubmitting(true);
     setError(null);
     try {
-      const prediction = await createPrediction({ ...values });
+      const prediction = await createPrediction({ ...values, ...buildReadingPayload(readings) });
       setResult(prediction);
-      notifyPredictionCreated(prediction);
+      notifyDataChanged(prediction);
       await refreshHistory();
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Prediction failed. Please try again.");
@@ -205,120 +88,102 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-sm text-theme-gray">
-          Enter clinical details and calculate the EOS risk score.
-        </p>
-      </div>
+      <PageHeader
+        title="Dashboard"
+        description="Enter clinical details and calculate the EOS risk score."
+      />
 
-      {result && (
-        <section className="rounded-lg bg-theme-white p-6 shadow-sm">
-          <div className="flex flex-wrap items-center gap-3">
-            <span
-              className={`rounded-full px-3 py-1 text-xs font-bold ${riskStyle(result.risk_label)}`}
-            >
-              {result.risk_label}
-            </span>
-            <span className="text-3xl font-bold">{result.probability_percent.toFixed(1)}%</span>
-            <span className="text-sm font-medium">{result.result_title}</span>
-          </div>
-          <p className="mt-3 text-sm">{result.interpretation}</p>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-theme-gray">
-            {result.recommended_actions.map((action) => (
-              <li key={action}>{action}</li>
-            ))}
-          </ul>
-          <p className="mt-3 text-xs text-theme-gray">
-            XGBoost {(result.xgb_eos_probability * 100).toFixed(1)}% · TFT{" "}
-            {(result.tft_eos_probability * 100).toFixed(1)}% ({result.tft_source}) · Threshold{" "}
-            {(result.threshold * 100).toFixed(1)}%
-          </p>
-        </section>
-      )}
+      {result && <PredictionResultCard result={result} />}
 
       {error && (
-        <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
+        <div
+          role="alert"
+          className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+        >
+          <AlertTriangleIcon className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>{error}</span>
+        </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {SECTIONS.map((section) => (
-          <section key={section.title} className="rounded-lg bg-theme-white p-6 shadow-sm">
-            <h2 className="mb-4 text-sm font-bold uppercase tracking-wide">{section.title}</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {section.fields.map((field) => (
-                <label key={field.name} className="block text-sm">
-                  <span className="mb-1 block font-medium">{field.label}</span>
-                  {field.kind === "checkbox" ? (
-                    <input
-                      type="checkbox"
-                      checked={values[field.name] === "1"}
-                      onChange={(e) => setField(field.name, e.target.checked ? "1" : "0")}
-                      className="h-5 w-5 accent-[#5b1616]"
-                    />
-                  ) : field.kind === "select" ? (
-                    <select
-                      value={values[field.name]}
-                      onChange={(e) => setField(field.name, e.target.value)}
-                      className={inputClass}
-                    >
-                      {(field.options ?? []).map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type={field.kind}
-                      value={values[field.name]}
-                      placeholder={field.placeholder}
-                      onChange={(e) => setField(field.name, e.target.value)}
-                      className={inputClass}
-                    />
-                  )}
-                </label>
-              ))}
+        {SECTIONS.map((section, index) => (
+          <Card key={section.title} className="p-5 sm:p-6">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-theme-maroon/10 text-xs font-bold text-theme-maroon">
+                {index + 1}
+              </span>
+              <h2 className="text-sm font-bold uppercase tracking-wide text-theme-ink-soft">
+                {section.title}
+              </h2>
             </div>
-          </section>
+            {section.title === VITAL_SIGNS_SECTION_TITLE ? (
+              <VitalSignsPanel
+                values={values}
+                setField={setField}
+                readings={readings}
+                onAddReading={addReading}
+                onRemoveReading={removeReading}
+                onUpdateReading={updateReading}
+              />
+            ) : (
+              <SectionGrid section={section} values={values} setField={setField} />
+            )}
+          </Card>
         ))}
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded bg-theme-maroon px-6 py-3 text-sm font-bold text-white hover:opacity-90 disabled:opacity-50"
-        >
-          {isSubmitting ? "GENERATING…" : "CALCULATE RISK SCORE"}
-        </button>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full sm:w-auto"
+            icon={isSubmitting ? <Spinner /> : <ArrowRightIcon className="h-4 w-4" />}
+          >
+            {isSubmitting ? "Generating…" : "Calculate risk score"}
+          </Button>
+        </div>
       </form>
 
-      <section className="rounded-lg bg-theme-white p-6 shadow-sm">
-        <h2 className="mb-4 text-sm font-bold uppercase tracking-wide">Prediction history</h2>
+      <Card>
+        <div className="flex items-center justify-between px-6 py-4">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-theme-ink-soft">
+            Prediction history
+          </h2>
+        </div>
         {history.length === 0 ? (
-          <p className="text-sm text-theme-gray">No predictions yet.</p>
+          <EmptyState
+            icon={<InboxIcon className="h-5 w-5" />}
+            title="No predictions yet"
+            description="Completed risk assessments will appear here."
+          />
         ) : (
-          <table className="w-full text-left text-sm">
-            <thead className="text-xs uppercase text-theme-gray">
-              <tr>
-                <th className="py-2">Date</th>
-                <th className="py-2">Patient</th>
-                <th className="py-2">Level</th>
-                <th className="py-2">Prob</th>
-              </tr>
-            </thead>
-            <tbody>
-              {history.map((row) => (
-                <tr key={row.id} className="border-t border-gray-100">
-                  <td className="py-2">{formatDate(row.created_at)}</td>
-                  <td className="py-2 font-medium">{row.patient_id}</td>
-                  <td className="py-2">{row.risk_label.replace(" RISK", "")}</td>
-                  <td className="py-2">{row.probability_percent.toFixed(1)}%</td>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-left text-sm">
+              <thead>
+                <tr className="border-y border-theme-line text-[11px] uppercase tracking-wide text-theme-gray">
+                  <th className="px-6 py-3 font-semibold">Date</th>
+                  <th className="px-6 py-3 font-semibold">Patient</th>
+                  <th className="px-6 py-3 font-semibold">Risk level</th>
+                  <th className="px-6 py-3 text-right font-semibold">Probability</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-theme-line">
+                {history.map((row) => (
+                  <tr key={row.id} className="transition-colors hover:bg-theme-light-gray/60">
+                    <td className="px-6 py-3 text-theme-gray">{formatDate(row.created_at)}</td>
+                    <td className="px-6 py-3 font-medium text-theme-ink-soft">{row.patient_id}</td>
+                    <td className="px-6 py-3">
+                      <RiskBadge label={row.risk_label} short />
+                    </td>
+                    <td className="px-6 py-3 text-right font-semibold text-theme-ink-soft">
+                      {row.probability_percent.toFixed(1)}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
-      </section>
+      </Card>
     </div>
   );
 }

@@ -2,7 +2,13 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 import * as authApi from "../api/auth";
-import type { AuthContextValue, LoginInput, SignupInput, User } from "../types/auth";
+import type {
+  AuthContextValue,
+  LoginInput,
+  ProfileUpdateInput,
+  SignupInput,
+  User,
+} from "../types/auth";
 import { AuthContext } from "./auth-context";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -40,9 +46,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
+  const updateProfile = useCallback(async (input: ProfileUpdateInput) => {
+    setUser(await authApi.updateProfile(input));
+  }, []);
+
+  const deleteAccount = useCallback(async () => {
+    await authApi.deleteAccount();
+    setUser(null);
+  }, []);
+
   const value = useMemo<AuthContextValue>(
-    () => ({ user, isLoading, isAuthenticated: user !== null, login, signup, logout }),
-    [user, isLoading, login, signup, logout],
+    () => ({
+      user,
+      isLoading,
+      isAuthenticated: user !== null,
+      login,
+      signup,
+      logout,
+      updateProfile,
+      deleteAccount,
+    }),
+    [user, isLoading, login, signup, logout, updateProfile, deleteAccount],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

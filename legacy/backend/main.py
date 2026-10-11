@@ -14,10 +14,17 @@ from app.config import (
     REMEMBER_ME_EXPIRE_DAYS,
 )
 from app.db import Base, engine, get_db
-from app.deps import get_current_user_optional
-from app.models import User
+from app.deps import get_current_user, get_current_user_optional
+from app.models import DeactivatedUser, User
 from app.routers.predictions import router as predictions_router
-from app.schemas import AuthResponse, LoginIn, MeResponse, SignupIn, UserOut
+from app.schemas import (
+    AuthResponse,
+    LoginIn,
+    MeResponse,
+    ProfileUpdateIn,
+    SignupIn,
+    UserOut,
+)
 from app.security import create_access_token, hash_password, verify_password
 
 origins = [
@@ -95,6 +102,8 @@ def login(payload: LoginIn, response: Response, db: Session = Depends(get_db)) -
     user = db.query(User).filter(User.email == email).first()
     if not user or not verify_password(payload.password, user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    if db.get(DeactivatedUser, user.id) is not None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account deactivated")
     expires_minutes = (
         REMEMBER_ME_EXPIRE_DAYS * 24 * 60 if payload.remember_me else JWT_EXPIRE_MINUTES
     )
@@ -104,6 +113,63 @@ def login(payload: LoginIn, response: Response, db: Session = Depends(get_db)) -
         max_age_seconds=expires_minutes * 60,
     )
     return AuthResponse(user=_to_user_out(user))
+
+
+@app.patch("/api/auth/me", response_model=AuthResponse)
+def update_me(
+    payload: ProfileUpdateIn,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> AuthResponse:
+    if payload.first_name is not None:
+        first_name = payload.first_name.strip()
+        if not first_name:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="First name is required")
+        user.first_name = first_name
+
+    if payload.last_name is not None:
+        last_name = payload.last_name.strip()
+        if not last_name:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Last name is required")
+        user.last_name = last_name
+
+    if payload.email is not None:
+        email = payload.email.lower().strip()
+        if email != user.email:
+            existing = db.query(User).filter(User.email == email).first()
+            if existing is not None and existing.id != user.id:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT, detail="Email already registered"
+                )
+            user.email = email
+
+    if payload.new_password is not None:
+        if not payload.current_password or not verify_password(
+            payload.current_password, user.password_hash
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Current password is incorrect",
+            )
+        user.password_hash = hash_password(payload.new_password)
+
+    db.commit()
+    db.refresh(user)
+    return AuthResponse(user=_to_user_out(user))
+
+
+@app.delete("/api/auth/me")
+def delete_me(
+    response: Response,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> dict[str, bool]:
+    """Soft-delete (deactivate) the signed-in account and clear its session."""
+    if db.get(DeactivatedUser, user.id) is None:
+        db.add(DeactivatedUser(user_id=user.id))
+        db.commit()
+    response.delete_cookie(key=COOKIE_NAME, path="/", samesite="lax")
+    return {"ok": True}
 
 
 @app.get("/api/auth/me", response_model=MeResponse)

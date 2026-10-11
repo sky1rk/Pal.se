@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from .config import COOKIE_NAME
 from .db import get_db
-from .models import User
+from .models import DeactivatedUser, User
 from .security import decode_access_token
 
 
@@ -19,6 +19,8 @@ def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
     user = db.get(User, user_id)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    if db.get(DeactivatedUser, user.id) is not None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Account deactivated")
     return user
 
 
